@@ -11,14 +11,21 @@ Currently it is just proof-of-concept which does boundary
 scan. At least it shows that input/output wiring is ok.
 
 interface remote_bitbang
+
 remote_bitbang_port 3335
+
 remote_bitbang_host jtag.lan
+
 jtag newtap tb276 tap -expected-id 0x020f10dd -irlen 10
+
 init
+
 scan_chain
-# svf -tap tb276.tap project.svf
+
+svf -tap tb276.tap project.svf
+
 shutdown
 
-Too bad SVF upload will not go.
 
+Too bad SVF upload will not go.
 Might be LUA is too slow. It should be rewritten in C
