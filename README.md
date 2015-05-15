@@ -45,7 +45,7 @@ For real JTAG use Arduino C code - very slow but seems to work.
 This is the pinout (e.g. 15 is GPIO15)
     TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
 
-Precompiled binary is availabe here:
+Precompiled binary is available. Upload them like this:
     esptool -vv -cd ck -cb 115200 -cp /dev/ttyUSB0 -ca 0x00000 -cf jtag.cpp_00000.bin -ca 0x40000 -cf jtag.cpp_40000.bin
 
 TRST and SRST are reset signals for ARM. Most FPGA don't need them.
