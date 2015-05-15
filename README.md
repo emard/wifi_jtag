@@ -5,7 +5,7 @@ ESP8266 as wifi jtag adapter.
 Here's lua code for nodemcu that listens to port 3335 
 and talks remote_bitbang protocol of OpenOCD
 
-When sufficiently debugged it 
+When sufficiently developed and optimized, it 
 should be used to send SVF bistream to the FPGA.
 
     interface remote_bitbang
@@ -18,7 +18,10 @@ should be used to send SVF bistream to the FPGA.
     shutdown
 
 Currently it is just proof-of-concept which does boundary 
-scan. At least it seems that gpio works and wiring is ok.
+scan. At least it seems that LUA gpio works and wiring is ok.
+
+Here's OpenOCD log of ESP8266 running nodemcu LUA code
+with remote_bitbang protocol.
 
     Warn : Adapter driver 'remote_bitbang' did not declare which transports it allows; assuming legacy JTAG-only
     Info : only one transport option; autoselect 'jtag'
