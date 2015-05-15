@@ -114,7 +114,7 @@ void loop() {
           case '5':
           case '6':
           case '7':
-            jtag_write(c & 7);
+            jtag_write(c & 7); // it's the same as ((c-'0') & 7)
             break;
           case 'R':
             client.write('0'+jtag_read()); // seems very slow switching from rx to tx
