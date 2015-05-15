@@ -1,4 +1,10 @@
 -- jtag: listen to OpenOCD remote_bitbang tcp port (jtag)
+--
+-- WARNING: this code doesn't work for long JTAG transfers
+-- boundary scan works as a proof-of-concept
+-- when JTAG transfers longer file, nodemcu reboots or
+-- stops working
+--
 port=3335
 -- esp gpio:  0, 2,15,13,12,14,16
 -- lua new :  3, 4, 8, 7, 6, 5, 0
