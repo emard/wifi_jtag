@@ -50,8 +50,8 @@ TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
 
 Get ESP8266 Arduino is also very simple:
-Fastest way is to install arduino-1.6.4 or higher is to download from
-http://arduino.cc and add support for ESP8266 by following instructions on
+Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
+Then add support for ESP8266 by following instructions on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
 If you'd like to compile all tools from source
@@ -59,3 +59,6 @@ this project will build them all and also
 add 8266 in arduino IDE and eclipse:
 https://github.com/esp8266/Arduino
 
+Similar JTAG projects:
+
+https://github.com/sowbug/JTAGWhisperer
