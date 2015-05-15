@@ -43,7 +43,7 @@ boundary scan. It is here just as a proof-of-concept.
 For real JTAG use Arduino C code - very slow but seems to work.
 Precompiled binary is available in bin/
 
-The pinout:
+The GPIO pinout:
     TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
 
 TRST and SRST are reset signals usually used for ARM debugging.
