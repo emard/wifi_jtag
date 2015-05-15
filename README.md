@@ -41,15 +41,13 @@ practice it will not work for longer transfers, only
 boundary scan. It is here just as a proof-of-concept.
 
 For real JTAG use Arduino C code - very slow but seems to work.
+Precompiled binary is available in bin/
 
 This is the pinout (e.g. 15 is GPIO15)
     TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
 
-Precompiled binary is available. Upload them like this:
-    esptool -vv -cd ck -cb 115200 -cp /dev/ttyUSB0 -ca 0x00000 -cf jtag.cpp_00000.bin -ca 0x40000 -cf jtag.cpp_40000.bin
-
-TRST and SRST are reset signals for ARM. Most FPGA don't need them.
-LED is activity LED, may be left unconnected too.
+TRST and SRST are reset signals usually used for ARM debugging.
+Most FPGA don't need them. LED may be left unconnected too.
 
 Get ESP8266 Arduino i also very simple:
 Fastest way is to install arduino-1.6.4 or higher is to download from
