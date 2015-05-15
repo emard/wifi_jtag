@@ -11,7 +11,7 @@
 // lua nodemcu:  3, 4, 8, 7, 6, 5, 0
 
 // GPIO pin assignment (e.g. 0 is GPIO0)
-enum { TDO=2, TDI=14, TCK=12, TMS=13, TRST=15, SRST=16 };
+enum { TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15 };
 
 const char* ssid = "ssid";
 const char* password = "password";
@@ -29,6 +29,7 @@ void jtag_on(void)
   pinMode(TMS, OUTPUT);
   pinMode(TRST, OUTPUT);
   pinMode(SRST, OUTPUT);
+  pinMode(LED, OUTPUT);
 }
 
 void jtag_off(void)
@@ -40,6 +41,7 @@ void jtag_off(void)
   pinMode(TMS, INPUT);
   pinMode(TRST, INPUT);
   pinMode(SRST, INPUT);
+  pinMode(LED, INPUT);
 }
 
 uint8_t jtag_read(void)
@@ -126,10 +128,13 @@ void loop() {
             jtag_reset((c-'r') & 3);
             break;
           case 'B':
-            Serial.println("blink on");
+            digitalWrite(LED, HIGH);
             break;
           case 'b':
-            Serial.println("blink off");
+            digitalWrite(LED, LOW);
+            break;
+          case 'Q':
+            client.stop(); // disconnect
             break;
         }
       }
