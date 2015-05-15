@@ -44,8 +44,8 @@ Might be LUA is slow?
 
 Now I've rewritten this in C for Arduino ESP8266 (but not yet tested :)
 
-Fastest way is to install normal arduino-1.6.x or higher 
-and add support for ESP8266 by following instructions on
+Fastest way is to install normal arduino-1.6.x or higher from
+http://arduino.cc and add support for ESP8266 by following instructions on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
 This project will compile all tools for ESP8266 and
