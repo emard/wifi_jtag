@@ -1,7 +1,5 @@
 /*
- *  Arduino OpenOCD remote_bitbang WIFI-JTAG server
- *  server_ip is the IP address of the ESP8266 module, will be 
- *  printed to Serial when the module is connected.
+ *  Arduino OpenOCD remote_bitbang WIFI-JTAG server for ESP8266
  */
 
 #include <ESP8266WiFi.h>
@@ -10,19 +8,19 @@
 // esp gpio:     0, 2,15,13,12,14,16
 // lua nodemcu:  3, 4, 8, 7, 6, 5, 0
 
-// GPIO pin assignment (e.g. 0 is GPIO0)
+// GPIO pin assignment (e.g. 15 is GPIO15)
 enum { TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15 };
 
 const char* ssid = "ssid";
 const char* password = "password";
 
-// Create an instance of the server
-// specify the port to listen on as an argument
+// specify TCP port to listen on as an argument
 WiFiServer server(3335);
 
+// activate JTAG outputs
 void jtag_on(void)
 {
-  Serial.println("jtag on");
+  // Serial.println("jtag on");
   pinMode(TDO, INPUT);
   pinMode(TDI, OUTPUT);
   pinMode(TCK, OUTPUT);
@@ -32,9 +30,10 @@ void jtag_on(void)
   pinMode(LED, OUTPUT);
 }
 
+// deactivate JTAG outputs: all pins input
 void jtag_off(void)
 {
-  Serial.println("jtag off");
+  // Serial.println("jtag off");
   pinMode(TDO, INPUT);
   pinMode(TDI, INPUT);
   pinMode(TCK, INPUT);
@@ -66,7 +65,7 @@ void setup() {
   Serial.begin(115200);
   delay(10);
 
-  // prepare GPIO
+  // set all GPIO as INPUT
   jtag_off();
   
   // Connect to WiFi network
@@ -119,7 +118,10 @@ void loop() {
             jtag_write(c & 7); // it's the same as ((c-'0') & 7)
             break;
           case 'R':
-            client.write('0'+jtag_read()); // seems very slow switching from rx to tx
+            // TODO: need speedup:
+            // WIFI TCP seems very slow switching from rx to tx
+            // should try some output buffering
+            client.write('0'+jtag_read());
             break;
           case 'r':
           case 's':
@@ -134,15 +136,15 @@ void loop() {
             digitalWrite(LED, LOW);
             break;
           case 'Q':
-            client.stop(); // disconnect
+            client.stop(); // disconnect client's TCP
             break;
         }
       }
       // yield();
     }
+    jtag_off();
     delay(1);
     client.stop();
     // Serial.println("client disonnected");
-    jtag_off();
   }
 }
