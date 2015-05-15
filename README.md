@@ -51,10 +51,14 @@ Most FPGA don't need them. LED may be left unconnected too.
 
 Getting ESP8266 Arduino is very simple:
 Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
-Then add support for ESP8266 by entering an URL in the field
-https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
-And select pull down menu Boards->Board Manager
-read more on
+Then add support for ESP8266 by entering an 
+open File->Default Settings->Additional Boards Manager URLs
+and enter URL:
+
+    https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+
+Select pull down menu Tools->Board->Board Manager
+and instal ESP8266. Read more on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
 If you'd like to compile all tools from source
