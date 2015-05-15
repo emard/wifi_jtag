@@ -1,12 +1,13 @@
 # WIFI-JTAG
 
-ESP8266 as wifi jtag adapter.
+ESP8266 for $3 as WIFI JTAG adapter.
+This could be the simplest, the cheapest and the slowest JTAG adapter.
 
-Here's lua code for nodemcu that listens to port 3335 
-and talks remote_bitbang protocol of OpenOCD
+Here's arduino code for ESP8266 which listens to port 3335 
+and talks remote_bitbang protocol with OpenOCD.
 
-When sufficiently developed and optimized, it 
-should be used to send SVF bistream to the FPGA.
+It can upload SVF bistream to the FPGA 
+(Currently tested only with Altera Cyclone-4 board TB276).
 
     interface remote_bitbang
     remote_bitbang_port 3335
@@ -17,11 +18,8 @@ should be used to send SVF bistream to the FPGA.
     svf -tap tb276.tap project.svf
     shutdown
 
-Currently it is just proof-of-concept which does boundary 
-scan. At least it seems that LUA gpio works and wiring is ok.
-
-Here's OpenOCD log of ESP8266 running nodemcu LUA code
-with remote_bitbang protocol.
+Here's OpenOCD log of remote_bitbang JTAG adapter made with
+Arduino ESP8266.
 
     Warn : Adapter driver 'remote_bitbang' did not declare which transports it allows; assuming legacy JTAG-only
     Info : only one transport option; autoselect 'jtag'
@@ -38,13 +36,13 @@ with remote_bitbang protocol.
     shutdown command invoked
     Info : remote_bitbang interface quit
 
-Too bad SVF upload will not go.
-Might be LUA is slow? 
+LUA version of the above does the same protocol but in 
+practice it will not work for longer transfers, only
+boundary scan. It is here just as a proof-of-concept.
 
+For real JTAG use Arduino C code - very slow but seems to work.
 
-Now I've rewritten this in C for Arduino ESP8266 (but not yet tested :)
-
-Fastest way is to install arduino-1.6.4 or higher from
+Fastest way is to install arduino-1.6.4 or higher is to download from
 http://arduino.cc and add support for ESP8266 by following instructions on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
