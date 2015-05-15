@@ -40,8 +40,8 @@ LUA version of the above does the same protocol but in
 practice it will not work for longer transfers, only
 boundary scan. It is here just as a proof-of-concept.
 
-For real JTAG use Arduino C code - very slow but seems to work.
-Precompiled binary is available in bin/
+For JTAG use Arduino C code. Slow: 750K SVF file uploads
+in 5 minutes. Precompiled binary is available in bin/
 
 The GPIO pinout:
     TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
