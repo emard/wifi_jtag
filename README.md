@@ -49,9 +49,12 @@ The GPIO pinout:
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
 
-Get ESP8266 Arduino is also very simple:
+Getting ESP8266 Arduino is very simple:
 Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
-Then add support for ESP8266 by following instructions on
+Then add support for ESP8266 by entering an URL in the field
+https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+And select pull down menu Boards->Board Manager
+read more on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
 If you'd like to compile all tools from source
