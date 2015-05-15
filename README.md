@@ -6,7 +6,7 @@ This could be the simplest, the cheapest and the slowest JTAG adapter.
 Here's arduino code for ESP8266 which listens to port 3335 
 and talks remote_bitbang protocol with OpenOCD.
 
-It can upload SVF bistream to the FPGA 
+It can upload SVF bistream over WIFI network to the FPGA 
 (Currently tested only with Altera Cyclone-4 board TB276).
 
     interface remote_bitbang
