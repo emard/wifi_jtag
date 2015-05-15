@@ -48,6 +48,7 @@ Fastest way is to install normal arduino-1.6.x or higher from
 http://arduino.cc and add support for ESP8266 by following instructions on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
-This project will compile all tools for ESP8266 and
+If you'd like to compile all tools from source
+this project will build them all and also
 add 8266 in arduino IDE and eclipse:
 https://github.com/esp8266/Arduino
