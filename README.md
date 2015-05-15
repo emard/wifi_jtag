@@ -38,11 +38,13 @@ Arduino ESP8266.
 
 LUA version of the above does the same protocol but in 
 practice it will not work for longer transfers, only
-boundary scan. It is here just as a proof-of-concept.
+boundary scan. Works unstable and often reboots. 
+It is here just as a proof-of-concept.
 
 For JTAG use Arduino C code. Slow: 750K SVF file uploads
-in 5 minutes. Precompiled binary is available in bin/
-
+in 5 minutes. Firmware is useable but not completely stable,
+sometimes freezes or reboots.
+Precompiled binary is available in bin/
 
 The GPIO pinout:
     TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
