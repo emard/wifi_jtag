@@ -37,4 +37,8 @@ scan. At least it seems that gpio works and wiring is ok.
 
 Too bad SVF upload will not go.
 Might be LUA is slow? 
-It should be rewritten in C
+It is rewritten in C (but not yet tested :)
+To install arduino support for ESP8266 you can follow instructions on
+https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
+Or in this project
+https://github.com/esp8266/Arduino
