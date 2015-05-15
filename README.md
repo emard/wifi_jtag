@@ -57,7 +57,7 @@ from OpenOCD could be optimized to use some hardware
 optimization in the ESP8266 like SPI as JTAG 
 accelerator, or SVF player approach from JTAGWhisperer.
 
-Getting ESP8266 Arduino is very simple:
+To compile from source you need ESP8266 Arduino.
 Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
 Then add support for ESP8266 in File->Default Settings->Additional Boards Manager URLs
 enter URL:
