@@ -43,11 +43,17 @@ boundary scan. It is here just as a proof-of-concept.
 For JTAG use Arduino C code. Slow: 750K SVF file uploads
 in 5 minutes. Precompiled binary is available in bin/
 
+
 The GPIO pinout:
     TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
+
+There is much room for improvement of course: network protocol
+from OpenOCD could be optimized to use some hardware
+optimization in the ESP8266 like SPI as JTAG 
+accelerator, or SVF player approach from JTAGWhisperer.
 
 Getting ESP8266 Arduino is very simple:
 Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
