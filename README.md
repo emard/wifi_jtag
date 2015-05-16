@@ -66,9 +66,10 @@ Most FPGA don't need them. LED may be left unconnected too.
 # Improvement
 
 There is much room for improvement of course: network protocol
-from OpenOCD could be optimized to use some hardware
-optimization in the ESP8266 like SPI as JTAG 
-accelerator, or SVF player approach from JTAGWhisperer.
+from OpenOCD could be optimized to allow longer packets, buffering,
+compression (instead of sending same sequence many times), use some
+hardware optimization in the ESP8266 like SPI as JTAG accelerator, 
+or SVF player approach from JTAGWhisperer.
 
 # Compiling
 
