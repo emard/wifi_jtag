@@ -49,7 +49,7 @@ Uploading FPGArduino https://github.com/f32c takes
 
 1.4MB SVF to Xilinx in 90 seconds.
 
-750K SVF to Altera in 250 seconds.
+750KB SVF to Altera in 250 seconds.
 
 # Reliability
 
