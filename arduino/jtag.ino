@@ -144,7 +144,6 @@ void loop() {
     }
     jtag_off();
     delay(1);
-    client.stop();
     // Serial.println("client disonnected");
   }
 }
