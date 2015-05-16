@@ -58,6 +58,12 @@ sometimes freezes or reboots, even if not used
 for JTAG but just connected to WIFI access point.
 We recommend to power it on just before upload.
 
+ESP8266 has serious problems with TCP stability.
+UDP seems much more stable if OpenOCD gets UDP 
+remote bitbang support, it would be worth a try!
+
+# Pinout
+
 The GPIO pinout:
     TDO=14, TDI=2, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
 
