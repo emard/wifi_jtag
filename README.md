@@ -19,7 +19,7 @@ Tested on boards: TB276 (Altera Cyclone-4) and TB299
     svf -tap tb276.tap project.svf
     shutdown
 
-Here's OpenOCD log of remote_bitbang JTAG adapter made with
+OpenOCD log of remote_bitbang JTAG adapter made with
 Arduino ESP8266.
 
     Warn : Adapter driver 'remote_bitbang' did not declare which transports it allows; assuming legacy JTAG-only
@@ -39,12 +39,11 @@ Arduino ESP8266.
 
 # Speed
 
-JTAG Upload is slow, mainly because 
-there's network traffic with short packets
-of 2-3 bytes sent to and from WIFI-JTAG.
-Switching from WIFI receive to transmit is
-slow and that's main reason for lack of
-decent speed.
+JTAG upload is slow because OpenOCD creates network 
+traffic with short packets of 1-3 bytes sending to and 
+from WIFI-JTAG.
+Switching direction from receive to transmit takes lot of
+time (100-300 ms). This is main reason for lack of decent speed.
 
 1.4MB SVF to Xilinx in 90 seconds.
 
@@ -74,8 +73,8 @@ accelerator, or SVF player approach from JTAGWhisperer.
 # Compiling
 
 Precompiled binary is available in bin/
-but you have to compile it to set your
-local ssid and password.
+but you probably will have to compile it to 
+set your WIFI ssid and password.
 
 To compile from source you need ESP8266 Arduino.
 Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
