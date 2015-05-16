@@ -80,7 +80,7 @@ time (100-300 ms). This is main reason for lack of decent speed.
 
 Uploading FPGArduino https://github.com/f32c takes
 
-750KB SVF to Altera in 250 seconds.
+750KB SVF to Altera in 4-5 minutes.
 
 # Reliability
 
