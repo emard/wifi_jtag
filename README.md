@@ -45,6 +45,8 @@ from WIFI-JTAG.
 Switching direction from receive to transmit takes lot of
 time (100-300 ms). This is main reason for lack of decent speed.
 
+Uploading FPGArduino https://github.com/f32c takes
+
 1.4MB SVF to Xilinx in 90 seconds.
 
 750K SVF to Altera in 250 seconds.
@@ -55,7 +57,6 @@ Firmware is useable but not completely stable,
 sometimes freezes or reboots, even if not used
 for JTAG but just connected to WIFI access point.
 We recommend to power it on just before upload.
-
 
 The GPIO pinout:
     TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
