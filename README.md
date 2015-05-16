@@ -37,31 +37,6 @@ Arduino ESP8266.
     shutdown command invoked
     Info : remote_bitbang interface quit
 
-# Speed
-
-JTAG upload is slow because OpenOCD creates network 
-traffic with short packets of 1-3 bytes sending to and 
-from WIFI-JTAG.
-Switching direction from receive to transmit takes lot of
-time (100-300 ms). This is main reason for lack of decent speed.
-
-Uploading FPGArduino https://github.com/f32c takes
-
-1.4MB SVF to Xilinx in 90 seconds.
-
-750KB SVF to Altera in 250 seconds.
-
-# Reliability
-
-Firmware is useable but not completely stable,
-sometimes freezes or reboots, even if not used
-for JTAG but just connected to WIFI access point.
-We recommend to power it on just before upload.
-
-ESP8266 has serious problems with TCP stability.
-UDP seems much more stable if OpenOCD gets UDP 
-remote bitbang support, it would be worth a try!
-
 # Pinout
 
 The GPIO pinout:
@@ -69,14 +44,6 @@ The GPIO pinout:
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
-
-# Improvement
-
-There is much room for improvement of course: network protocol
-from OpenOCD could be optimized to allow longer packets, buffering,
-compression (instead of sending same sequence many times), use some
-hardware optimization in the ESP8266 like SPI as JTAG accelerator, 
-or SVF player approach from JTAGWhisperer.
 
 # Compiling
 
@@ -100,6 +67,40 @@ If you'd like to compile all tools from source
 this project will build them all and also
 add 8266 in arduino IDE and eclipse:
 https://github.com/esp8266/Arduino
+
+# Speed
+
+JTAG upload is slow because OpenOCD creates network 
+traffic with short packets of 1-3 bytes sending to and 
+from WIFI-JTAG.
+Switching direction from receive to transmit takes lot of
+time (100-300 ms). This is main reason for lack of decent speed.
+
+Uploading FPGArduino https://github.com/f32c takes
+
+1.4MB SVF to Xilinx in 90 seconds.
+
+750KB SVF to Altera in 250 seconds.
+
+# Reliability
+
+Firmware is useable but not completely stable,
+sometimes freezes or reboots, when connected to 
+WIFI access point even if JTAG is not used.
+We recommend to power it on just before use.
+
+ESP8266 library has problems with TCP stability.
+UDP seems much more stable than TCP. When OpenOCD
+gets UDP remote bitbang support, ESP8266 would
+benefit!
+
+# Improvement
+
+There is much room for improvement of course: network protocol
+from OpenOCD could be optimized to allow longer packets, buffering,
+compression (instead of sending same sequence many times), use some
+hardware optimization in the ESP8266 like SPI as JTAG accelerator, 
+or SVF player approach from JTAGWhisperer.
 
 # LUA (not useable)
 
