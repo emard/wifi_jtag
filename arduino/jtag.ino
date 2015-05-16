@@ -9,7 +9,7 @@
 // lua nodemcu:  3, 4, 8, 7, 6, 5, 0
 
 // GPIO pin assignment (e.g. 15 is GPIO15)
-enum { TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15 };
+enum { TDO=14, TDI=2, TCK=12, TMS=13, TRST=0, SRST=16, LED=15 };
 
 const char* ssid = "ssid";
 const char* password = "password";
@@ -23,20 +23,20 @@ void jtag_on(void)
   // Serial.println("jtag on");
   pinMode(TDO, INPUT);
   pinMode(TDI, OUTPUT);
-  pinMode(TCK, OUTPUT);
   pinMode(TMS, OUTPUT);
   pinMode(TRST, OUTPUT);
   pinMode(SRST, OUTPUT);
   pinMode(LED, OUTPUT);
+  pinMode(TCK, OUTPUT);
 }
 
 // deactivate JTAG outputs: all pins input
 void jtag_off(void)
 {
   // Serial.println("jtag off");
+  pinMode(TCK, INPUT);
   pinMode(TDO, INPUT);
   pinMode(TDI, INPUT);
-  pinMode(TCK, INPUT);
   pinMode(TMS, INPUT);
   pinMode(TRST, INPUT);
   pinMode(SRST, INPUT);
