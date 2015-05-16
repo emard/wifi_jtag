@@ -59,7 +59,7 @@ for JTAG but just connected to WIFI access point.
 We recommend to power it on just before upload.
 
 The GPIO pinout:
-    TDO=2, TDI=14, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
+    TDO=14, TDI=2, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
