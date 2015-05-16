@@ -7,8 +7,10 @@ Here's arduino code for ESP8266 which listens to port 3335
 and talks remote_bitbang protocol with OpenOCD.
 
 It can upload SVF bistream over WIFI network to the FPGA. 
-Tested on boards: TB276 (Altera Cyclone-4) and TB299 
-(Xilinx Spartan-6), more on http://www.nxlab.fer.hr/fpgarduino/linux_bitstreams.html
+more on http://www.nxlab.fer.hr/fpgarduino/linux_bitstreams.html
+
+Works for FPGA board TB276 (Altera Cyclone-4)
+Doesn't work for FPGA board TB299 (Xilinx Spartan-6)
 
     interface remote_bitbang
     remote_bitbang_port 3335
@@ -77,8 +79,6 @@ Switching direction from receive to transmit takes lot of
 time (100-300 ms). This is main reason for lack of decent speed.
 
 Uploading FPGArduino https://github.com/f32c takes
-
-1.4MB SVF to Xilinx in 90 seconds.
 
 750KB SVF to Altera in 250 seconds.
 
