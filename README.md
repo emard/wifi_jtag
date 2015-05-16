@@ -8,7 +8,7 @@ and talks remote_bitbang protocol with OpenOCD.
 
 It can upload SVF bistream over WIFI network to the FPGA. 
 Tested on boards: TB276 (Altera Cyclone-4) and TB299 
-(Xilinx Spartan-6).
+(Xilinx Spartan-6), more on http://www.nxlab.fer.hr/fpgarduino/linux_bitstreams.html
 
     interface remote_bitbang
     remote_bitbang_port 3335
