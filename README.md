@@ -1,6 +1,6 @@
 # WIFI-JTAG
 
-ESP8266 for $3 as WIFI JTAG adapter.
+ESP8266 for $4 as WIFI JTAG adapter.
 This could be the simplest, the cheapest and the slowest JTAG adapter.
 
 Here's arduino code for ESP8266 which listens to port 3335 
