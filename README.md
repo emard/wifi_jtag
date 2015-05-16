@@ -75,8 +75,9 @@ or SVF player approach from JTAGWhisperer.
 # Compiling
 
 Precompiled binary is available in bin/
-but you probably will have to compile it to 
-set your WIFI ssid and password.
+Default SSID=ssid PASSWORD=password
+
+It has to be compiled to change SSID and PASSWORD.
 
 To compile from source you need ESP8266 Arduino.
 Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
