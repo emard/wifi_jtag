@@ -149,9 +149,6 @@ void loop() {
             jtag_write(c & 7); // it's the same as ((c-'0') & 7)
             break;
           case 'R':
-            // TODO: need speedup:
-            // WIFI TCP seems very slow switching from rx to tx
-            // should try some output buffering
             client.write('0'+jtag_read());
             yield();
             break;
