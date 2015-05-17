@@ -1,8 +1,16 @@
 /*
  *  Arduino OpenOCD remote_bitbang SERIAL-JTAG for ESP8266
- *  Needs some TCP or UNIX socket-to-serial bridge:
+ *  LICENSE=GPL
+ *
+ *  Needs TCP socket-to-serial bridge:
  *
  *  socat TCP4-LISTEN:3335,fork /dev/ttyUSB0,b230400,raw,echo=0,crnl
+ *
+ *  OpenOCD interface:
+ *
+ *  interface remote_bitbang
+ *  remote_bitbang_host localhost
+ *  remote_bitbang_port 3335
  */
 
 #ifdef ESP8266

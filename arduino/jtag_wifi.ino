@@ -1,5 +1,12 @@
 /*
  *  Arduino OpenOCD remote_bitbang WIFI-JTAG server for ESP8266
+ *  LICENSE=GPL
+ *
+ *  OpenOCD interface:
+ *
+ *  interface remote_bitbang
+ *  remote_bitbang_host jtag.lan
+ *  remote_bitbang_port 3335
  */
 
 #include <ESP8266WiFi.h>
