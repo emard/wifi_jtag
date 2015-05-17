@@ -85,7 +85,6 @@ void setup() {
   Serial.begin(115200);
   delay(10);
 
-  // set all GPIO as INPUT
   pinMode(LED, OUTPUT);
   
   // Connect to WiFi network
