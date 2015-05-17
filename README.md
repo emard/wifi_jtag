@@ -55,6 +55,8 @@ The GPIO pinout:
   TCK   | yellow |   D5    | GPIO14 |    1  |    6
   VCC   | red    |   3V3   | VCC    |    4  |    2
 
+![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
+
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
 WIFI-JTAG board can be directly powered from JTAG connector.
