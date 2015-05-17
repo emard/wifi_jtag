@@ -5,7 +5,7 @@
  *  OpenOCD interface:
  *
  *  interface remote_bitbang
- *  remote_bitbang_host jtag.lan
+ *  remote_bitbang_host localhost
  *  remote_bitbang_port 3335
  */
 
@@ -15,8 +15,9 @@
 // esp gpio:     0, 2,15,13,12,14,16
 // lua nodemcu:  3, 4, 8, 7, 6, 5, 0
 
-// GPIO pin assignment (e.g. 15 is GPIO15)
-enum { TDO=12, TDI=13, TCK=14, TMS=16, TRST=0, SRST=2, LED=15 };
+// GPIO pin assignment
+// Try to avoid connecting JTAG to GPIO 0, 2, 15, 16 (board may not boot)
+enum { TDO=12, TDI=13, TCK=14, TMS=5, TRST=0, SRST=2, LED=16 };
 
 // led logic
 #define LED_ON LOW
@@ -27,6 +28,9 @@ const char* password = "password";
 
 // specify TCP port to listen on as an argument
 WiFiServer server(3335);
+WiFiClient client;
+
+#define WATCHDOG 0 // disabled because ESP watchdog is not working
 
 // activate JTAG outputs
 void jtag_on(void)
@@ -51,6 +55,7 @@ void jtag_off(void)
   pinMode(TMS, INPUT);
   pinMode(TRST, INPUT);
   pinMode(SRST, INPUT);
+  digitalWrite(LED, LED_OFF);
   pinMode(LED, INPUT);
 }
 
@@ -74,6 +79,9 @@ void jtag_reset(uint8_t trst_srst)
 
 void setup() {
   jtag_off();
+  #if WATCHDOG
+  ESP.wdtEnable(1024);
+  #endif
   Serial.begin(115200);
   delay(10);
 
@@ -89,6 +97,9 @@ void setup() {
   WiFi.begin(ssid, password);
   
   while (WiFi.status() != WL_CONNECTED) {
+    #if WATCHDOG
+    ESP.wdtFeed();
+    #endif
     digitalWrite(LED, LED_ON);
     delay(10);
     digitalWrite(LED, LED_OFF);
@@ -100,6 +111,7 @@ void setup() {
   
   // Start the server
   server.begin();
+  //server.setNoDelay(true);
   Serial.println("Server started");
 
   // Print the IP address
@@ -109,7 +121,10 @@ void setup() {
 
 void loop() {
   // Check if a client has connected
-  WiFiClient client = server.available();
+  #if WATCHDOG
+  ESP.wdtFeed();
+  #endif
+  client = server.available();
   if(client)
   {
     // Serial.println("new client");
@@ -138,6 +153,7 @@ void loop() {
             // WIFI TCP seems very slow switching from rx to tx
             // should try some output buffering
             client.write('0'+jtag_read());
+            yield();
             break;
           case 'r':
           case 's':
@@ -152,14 +168,19 @@ void loop() {
             digitalWrite(LED, LED_OFF);
             break;
           case 'Q':
+            client.flush();
             client.stop(); // disconnect client's TCP
             break;
         }
       }
-      // yield();
+      #if WATCHDOG
+      ESP.wdtFeed();
+      #endif
+      yield();
     }
-    delay(1);
     jtag_off();
+    client.flush();
+    client.stop();
     // Serial.println("client disonnected");
   }
 }
