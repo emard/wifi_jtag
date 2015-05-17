@@ -71,17 +71,21 @@ It has to be compiled to change SSID and PASSWORD.
 
 To compile from source you need ESP8266 Arduino.
 Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
-Then add support for ESP8266 in File->Default Settings->Additional Boards Manager URLs
-enter URL:
+Then add support for ESP8266
+
+https://github.com/sandeepmistry/esp8266-Arduino
+version 0.0.5 is simple to install and has pretty 
+stable and fast TCP stack. 
+
+Adafruit has some ESP8266 which is easy to install but 
+speed and stability of TCP is not the best.
+in File->Default Settings->Additional Boards Manager URLs enter URL:
 
     https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
 
 Select pull down menu Tools->Board->Board Manager
 and instal ESP8266 (cca 30MB). Read more on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
-
-Here's also another core support
-https://github.com/sandeepmistry/esp8266-Arduino
 
 This is the main project that started it all
 If you'd like to compile all tools from source
@@ -98,25 +102,20 @@ from WIFI-JTAG. Watch the traffic:
     tcpdump -A port 3335
 
 Switching direction from receive to transmit takes lot of
-time (100-300 ms). This is main reason for lack of decent speed.
+some time.
 
-Uploading FPGArduino https://github.com/f32c over WiFi or serial
-230400 takes:
+Time uploading FPGArduino https://github.com/f32c 750KB SVF
+file to TB276 (Altera Cyclone-4)
 
-750KB SVF to Altera in 4-5 minutes.
+WiFi: 2 minutes
+Serial(230400 baud): 4 minutes
 
 # Reliability
 
 Firmware is useable but not completely stable.
-It will crash after each JTAG use and also 
-occasional when connected to WIFI access point 
-even if JTAG is not used.
+It may sometimes stop working when just connected 
+to WIFI access point even if JTAG is not used.
 We recommend to power it on just before use.
-
-ESP8266 library has problems with TCP stability.
-UDP seems much more stable than TCP. When OpenOCD
-gets UDP remote bitbang support, ESP8266 would
-benefit!
 
 # Improvement
 
