@@ -2,7 +2,7 @@
  *  Arduino OpenOCD remote_bitbang SERIAL-JTAG for ESP8266
  *  Needs some TCP or UNIX socket-to-serial bridge:
  *
- *  socat TCP4-LISTEN:3335,fork /dev/ttyUSB0,b250000,raw,echo=0,crnl
+ *  socat TCP4-LISTEN:3335,fork /dev/ttyUSB0,b230400,raw,echo=0,crnl
  */
 
 #include <ESP8266WiFi.h>
@@ -67,7 +67,7 @@ void jtag_reset(uint8_t trst_srst)
 void setup() {
   jtag_off();
   WiFi.mode(WIFI_AP);
-  Serial.begin(250000);
+  Serial.begin(230400);
 }
 
 void loop() {
