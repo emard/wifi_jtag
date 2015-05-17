@@ -107,8 +107,8 @@ some time.
 Time uploading FPGArduino https://github.com/f32c 750KB SVF
 file to TB276 (Altera Cyclone-4)
 
-WiFi: 2 minutes
-Serial(230400 baud): 4 minutes
+    WiFi sandeepmistry 0.0.5 : 2 minutes
+    Serial 230400 baud       : 4 minutes
 
 # Reliability
 
