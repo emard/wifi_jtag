@@ -5,7 +5,9 @@
  *  socat TCP4-LISTEN:3335,fork /dev/ttyUSB0,b230400,raw,echo=0,crnl
  */
 
+#ifdef ESP8266
 #include <ESP8266WiFi.h>
+#endif
 
 // cross reference gpio to nodemcu lua pin numbering
 // esp gpio:     0, 2,15,13,12,14,16
@@ -66,7 +68,9 @@ void jtag_reset(uint8_t trst_srst)
 
 void setup() {
   jtag_off();
+  #ifdef ESP8266
   WiFi.mode(WIFI_AP);
+  #endif
   Serial.begin(230400);
 }
 
