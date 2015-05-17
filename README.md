@@ -96,8 +96,8 @@ from WIFI-JTAG. Watch the traffic:
 
     tcpdump -A port 3335
 
-Switching direction from receive to transmit takes lot of
-some time.
+Switching direction from receive to transmit takes time
+1-300 ms.
 
 Time uploading FPGArduino https://github.com/f32c 
 
