@@ -86,7 +86,10 @@ https://github.com/esp8266/Arduino
 
 JTAG upload is slow because OpenOCD creates network 
 traffic with short packets of 1-3 bytes sending to and 
-from WIFI-JTAG.
+from WIFI-JTAG. Watch the traffic:
+
+    tcpdump -A port 3335
+
 Switching direction from receive to transmit takes lot of
 time (100-300 ms). This is main reason for lack of decent speed.
 
