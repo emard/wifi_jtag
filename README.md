@@ -46,6 +46,9 @@ What works for one FPGA, doesn't neccessary work for the other.
 The GPIO pinout:
     TDO=12, TDI=13, TCK=14, TMS=5, TRST=0, SRST=2, LED=16
 
+![ESP-12 pinout](/pic/ESP12pinout.jpg)
+![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
+
   PIN   | color  | nodemcu | ESP-12 | TB276 | TB299 
 --------|--------|---------|--------|-------|--------
   GND   | black  |   GND   | GND    |   10  | 1,3,5,7,9,11,13
@@ -54,8 +57,11 @@ The GPIO pinout:
   TDO   | green  |   D6    | GPIO12 |    3  |    8 
   TCK   | yellow |   D5    | GPIO14 |    1  |    6
   VCC   | red    |   3V3   | VCC    |    4  |    2
-
-![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
+VCC 15k | orange |         | GPIO0  |       |     
+VCC 15k | orange |         | GPIO2  |       |     
+VCC 15k | orange |         | GPIO16 |       |     
+VCC 15k | orange |         | CH_PD  |       |     
+GND 15k | gray   |         | GPIO15 |       |
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
