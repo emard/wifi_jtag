@@ -38,12 +38,12 @@ Arduino ESP8266.
     shutdown command invoked
     Info : remote_bitbang interface quit
 
-Doesn't work for FPGA board TB299 (Xilinx Spartan-6). It looks like
-everything is fine:
+What works for one FPGA, doesn't neccessary work for the other. 
+FPGA board TB299 (Xilinx Spartan-6) seems like everything is fine:
 
     svf file programmed successfully for 59 commands with 0 errors
 
-But FPGA will not start.
+But FPGA will not start. Maybe upload too slow?
 
 # Pinout
 
