@@ -49,19 +49,19 @@ The GPIO pinout:
 ![ESP-12 pinout](/pic/ESP12pinout.jpg)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
 
-  PIN   | color  | nodemcu | ESP-12 | TB276 | TB299 
---------|--------|---------|--------|-------|--------
-  GND   | black  |   GND   | GND    |   10  | 1,3,5,7,9,11,13
-  TMS   | violet |   D1    | GPIO5  |    5  |    4
-  TDI   | blue   |   D7    | GPIO13 |    9  |   10
-  TDO   | green  |   D6    | GPIO12 |    3  |    8 
-  TCK   | yellow |   D5    | GPIO14 |    1  |    6
-  VCC   | red    |   3V3   | VCC    |    4  |    2
-VCC 15k | orange0|         | CH_PD  |       |     
-VCC 15k | orange1|         | GPIO0  |       |     
-VCC 15k | orange2|         | GPIO2  |       |     
-VCC 15k | orange3|         | GPIO16 |       |     
-GND 15k | gray   |         | GPIO15 |       |
+  PIN   | color  | nodemcu | ESP-12 |TB276 10-pin |TB299 14-pin
+--------|--------|---------|--------|-------------|-----------------
+  GND   | black  |   GND   | GND    |      10     | 1,3,5,7,9,11,13
+  TMS   | violet |   D1    | GPIO5  |       5     |    4
+  TDI   | blue   |   D7    | GPIO13 |       9     |   10
+  TDO   | green  |   D6    | GPIO12 |       3     |    8 
+  TCK   | yellow |   D5    | GPIO14 |       1     |    6
+  VCC   | red    |   3V3   | VCC    |       4     |    2
+VCC 15k | orange0|         | CH_PD  |             |     
+VCC 15k | orange1|         | GPIO0  |             |     
+VCC 15k | orange2|         | GPIO2  |             |     
+VCC 15k | orange3|         | GPIO16 |             |     
+GND 15k | gray   |         | GPIO15 |             |
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
