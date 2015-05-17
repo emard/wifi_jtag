@@ -22,6 +22,7 @@
 // lua nodemcu:  3, 4, , 7, 6, 5, 0
 
 // GPIO pin assignment (e.g. 15 is GPIO15)
+// Try to avoid connecting JTAG to GPIO 0, 2, 15, 16 (board may not boot)
 enum { TDO=12, TDI=13, TCK=14, TMS=5, TRST=0, SRST=2, LED=16 };
 
 // led logic
