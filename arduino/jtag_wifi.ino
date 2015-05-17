@@ -5,7 +5,7 @@
  *  OpenOCD interface:
  *
  *  interface remote_bitbang
- *  remote_bitbang_host localhost
+ *  remote_bitbang_host jtag.lan
  *  remote_bitbang_port 3335
  */
 
