@@ -56,6 +56,7 @@ Most FPGA don't need them. LED may be left unconnected too.
 # Compiling
 
 Precompiled binary is available in bin/
+
 Default SSID=ssid PASSWORD=password
 
 It has to be compiled to change SSID and PASSWORD.
