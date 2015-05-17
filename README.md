@@ -10,7 +10,7 @@ version of the same, for use with any arduino (without WIFI).
 It can upload SVF bistream over WIFI network to the FPGA. 
 more on http://www.nxlab.fer.hr/fpgarduino/linux_bitstreams.html
 
-Works for FPGA board TB276 (Altera Cyclone-4).
+Works for FPGA boards TB276 (Altera Cyclone-4) and TB299 (Xilinx Spartan-6)
 
     interface remote_bitbang
     remote_bitbang_port 3335
@@ -104,11 +104,14 @@ from WIFI-JTAG. Watch the traffic:
 Switching direction from receive to transmit takes lot of
 some time.
 
-Time uploading FPGArduino https://github.com/f32c 750KB SVF
-file to TB276 (Altera Cyclone-4)
+Time uploading FPGArduino https://github.com/f32c 
 
-    WiFi sandeepmistry 0.0.5 : 2 minutes
-    Serial 230400 baud       : 4 minutes
+    750KB SVF file to TB276 (Altera Cyclone-4)
+    WiFi sandeepmistry 0.0.5 : 1:45 minutes
+    Serial 230400 baud       : 4:20 minutes
+
+    1.4MB SVF file to TB299 (Xilinx Spartan-6)
+    WiFi sandeepmistry 0.0.5 : 1:30 minutes
 
 # Reliability
 
