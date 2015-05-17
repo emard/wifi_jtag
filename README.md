@@ -57,10 +57,10 @@ The GPIO pinout:
   TDO   | green  |   D6    | GPIO12 |    3  |    8 
   TCK   | yellow |   D5    | GPIO14 |    1  |    6
   VCC   | red    |   3V3   | VCC    |    4  |    2
-VCC 15k | orange |         | GPIO0  |       |     
-VCC 15k | orange |         | GPIO2  |       |     
-VCC 15k | orange |         | GPIO16 |       |     
-VCC 15k | orange |         | CH_PD  |       |     
+VCC 15k | orange1|         | GPIO0  |       |     
+VCC 15k | orange2|         | GPIO2  |       |     
+VCC 15k | orange3|         | GPIO16 |       |     
+VCC 15k | orange4|         | CH_PD  |       |     
 GND 15k | gray   |         | GPIO15 |       |
 
 TRST and SRST are reset signals usually used for ARM debugging.
