@@ -48,7 +48,7 @@ But FPGA will not start. Maybe upload too slow?
 # Pinout
 
 The GPIO pinout:
-    TDO=14, TDI=2, TCK=12, TMS=13, TRST=0, SRST=16, LED=15
+    TDO=12, TDI=13, TCK=14, TMS=16, TRST=0, SRST=2, LED=15
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.

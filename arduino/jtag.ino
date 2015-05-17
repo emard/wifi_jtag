@@ -9,7 +9,11 @@
 // lua nodemcu:  3, 4, 8, 7, 6, 5, 0
 
 // GPIO pin assignment (e.g. 15 is GPIO15)
-enum { TDO=14, TDI=2, TCK=12, TMS=13, TRST=0, SRST=16, LED=15 };
+enum { TDO=12, TDI=13, TCK=14, TMS=16, TRST=0, SRST=2, LED=15 };
+
+// led logic
+#define LED_ON LOW
+#define LED_OFF HIGH
 
 const char* ssid = "ssid";
 const char* password = "password";
@@ -62,11 +66,12 @@ void jtag_reset(uint8_t trst_srst)
 }
 
 void setup() {
+  jtag_off();
   Serial.begin(115200);
   delay(10);
 
   // set all GPIO as INPUT
-  jtag_off();
+  pinMode(LED, OUTPUT);
   
   // Connect to WiFi network
   Serial.println();
@@ -77,6 +82,9 @@ void setup() {
   WiFi.begin(ssid, password);
   
   while (WiFi.status() != WL_CONNECTED) {
+    digitalWrite(LED, LED_ON);
+    delay(10);
+    digitalWrite(LED, LED_OFF);
     delay(500);
     Serial.print(".");
   }
@@ -89,6 +97,7 @@ void setup() {
 
   // Print the IP address
   Serial.println(WiFi.localIP());
+  pinMode(LED, INPUT);
 }
 
 void loop() {
@@ -130,10 +139,10 @@ void loop() {
             jtag_reset((c-'r') & 3);
             break;
           case 'B':
-            digitalWrite(LED, HIGH);
+            digitalWrite(LED, LED_ON);
             break;
           case 'b':
-            digitalWrite(LED, LOW);
+            digitalWrite(LED, LED_OFF);
             break;
           case 'Q':
             client.stop(); // disconnect client's TCP
@@ -142,8 +151,8 @@ void loop() {
       }
       // yield();
     }
-    jtag_off();
     delay(1);
+    jtag_off();
     // Serial.println("client disonnected");
   }
 }
