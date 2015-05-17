@@ -46,14 +46,14 @@ What works for one FPGA, doesn't neccessary work for the other.
 The GPIO pinout:
     TDO=12, TDI=13, TCK=14, TMS=5, TRST=0, SRST=2, LED=16
 
-  PIN   | color  | nodemcu | ESP12 GPIO | TB276 | TB299 
---------|--------|---------|------------|-------|--------
-  GND   | black  |   GND   |    GND     |   10  |1,3,5,7,9,11,13
-  TMS   | violet |   D1    |      5     |    5  |    4
-  TDI   | blue   |   D7    |     13     |    9  |   10
-  TDO   | green  |   D6    |     12     |    3  |    8 
-  TCK   | yellow |   D5    |     14     |    1  |    6
-  VCC   | red    |   3V3   |    VCC     |    4  |    2
+  PIN   | color  | nodemcu | ESP-12 | TB276 | TB299 
+--------|--------|---------|--------|-------|--------
+  GND   | black  |   GND   | GND    |   10  | 1,3,5,7,9,11,13
+  TMS   | violet |   D1    | GPIO5  |    5  |    4
+  TDI   | blue   |   D7    | GPIO13 |    9  |   10
+  TDO   | green  |   D6    | GPIO12 |    3  |    8 
+  TCK   | yellow |   D5    | GPIO14 |    1  |    6
+  VCC   | red    |   3V3   | VCC    |    4  |    2
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
