@@ -80,6 +80,10 @@ Select pull down menu Tools->Board->Board Manager
 and instal ESP8266 (cca 30MB). Read more on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
+Here's also another core support
+https://github.com/sandeepmistry/esp8266-Arduino
+
+This is the main project that started it all
 If you'd like to compile all tools from source
 this project will build them all and also
 add 8266 in arduino IDE and eclipse:
