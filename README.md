@@ -49,13 +49,13 @@ But FPGA will not start. Maybe upload too slow?
 # Pinout
 
 The GPIO pinout:
-    TDO=12, TDI=13, TCK=14, TMS=16, TRST=0, SRST=2, LED=15
+    TDO=12, TDI=13, TCK=14, TMS=5, TRST=0, SRST=2, LED=16
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
 WIFI-JTAG board can be directly powered from JTAG connector.
 
-Avoid using GPIO0, GPIO2, GPIO15 for JTAG signals, as those
+Avoid using GPIO 0, 2, 15, 16 for JTAG signals, as those
 pins need to be at some defalut state at power on for ESP8266
 to boot firmware. Use ESP-12 as it has has plenty of GPIO.
 There's complete development board with micro usb:
