@@ -9,8 +9,7 @@ and talks remote_bitbang protocol with OpenOCD.
 It can upload SVF bistream over WIFI network to the FPGA. 
 more on http://www.nxlab.fer.hr/fpgarduino/linux_bitstreams.html
 
-Works for FPGA board TB276 (Altera Cyclone-4)
-Doesn't work for FPGA board TB299 (Xilinx Spartan-6)
+Works for FPGA board TB276 (Altera Cyclone-4).
 
     interface remote_bitbang
     remote_bitbang_port 3335
@@ -38,6 +37,13 @@ Arduino ESP8266.
      0 tb276.tap              Y     0x020f10dd 0x020f10dd    10 0x01  0x03
     shutdown command invoked
     Info : remote_bitbang interface quit
+
+Doesn't work for FPGA board TB299 (Xilinx Spartan-6). It looks like
+everything is fine:
+
+    svf file programmed successfully for 59 commands with 0 errors
+
+But FPGA will not start.
 
 # Pinout
 
