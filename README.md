@@ -51,7 +51,7 @@ Most FPGA don't need them. LED may be left unconnected too.
 WIFI-JTAG board can be directly powered from JTAG connector.
 
 Avoid using GPIO 0, 2, 15, 16 for JTAG signals, as those
-pins need to be at some defalut state at power on for ESP8266
+pins need to be at some default state at power on for ESP8266
 to boot firmware. Use ESP-12 as it has has plenty of GPIO.
 There's complete development board with micro usb:
 https://github.com/nodemcu/nodemcu-devkit
