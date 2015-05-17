@@ -1,6 +1,6 @@
 # WIFI-JTAG
 
-ESP8266 for $4 as WIFI JTAG adapter.
+ESP8266 (ESP-12) for $4 as WIFI JTAG adapter.
 This could be the simplest, the cheapest and the slowest JTAG adapter.
 
 Here's arduino code for ESP8266 which listens to port 3335 
@@ -52,6 +52,8 @@ The GPIO pinout:
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
+WIFI-JTAG board can be directly powered from JTAG connector.
+
 Avoid using GPIO0, GPIO2, GPIO15 for JTAG signals, as those
 pins need to be at some defalut state at power on for ESP8266
 to boot firmware. Use ESP-12 as it has has plenty of GPIO.
@@ -99,9 +101,10 @@ Uploading FPGArduino https://github.com/f32c takes
 
 # Reliability
 
-Firmware is useable but not completely stable,
-sometimes freezes or reboots, when connected to 
-WIFI access point even if JTAG is not used.
+Firmware is useable but not completely stable.
+It will crash after each JTAG use and also 
+occasional when connected to WIFI access point 
+even if JTAG is not used.
 We recommend to power it on just before use.
 
 ESP8266 library has problems with TCP stability.
