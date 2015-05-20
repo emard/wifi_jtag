@@ -82,9 +82,6 @@ to boot firmware. Use ESP-12 as it has has plenty of GPIO.
 There's complete development board with micro usb:
 https://github.com/nodemcu/nodemcu-devkit
 
-![wiring nodemcu ](/pic/wiring-nodemcu.jpg)
-![wiring Altera TB276](/pic/wiring-tb276.jpg)
-
 # Compiling
 
 Precompiled binary is available in bin/
