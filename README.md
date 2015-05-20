@@ -90,26 +90,31 @@ To compile from source you need ESP8266 Arduino.
 Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
 Then add support for ESP8266
 
-https://github.com/sandeepmistry/esp8266-Arduino
-version 0.0.5 is simple to install and has pretty 
-stable and fast TCP stack.
-
-Adafruit has some ESP8266 which is easy to install but 
-speed and stability of TCP is not the best.
-in File->Default Settings->Additional Boards Manager URLs enter:
-
-    https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
-
-Select pull down menu Tools->Board->Board Manager
-and instal ESP8266 (cca 30MB). Read more on
-https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
-
 This is the main project that started it all
 https://github.com/esp8266/Arduino
 Automatic installation using JSON is now avaialble
 in File->Default Settings->Additional Boards Manager URLs enter:
 
     http://arduino.esp8266.com/package_esp8266com_index.json
+
+Select pull down menu Tools->Board->Board Manager
+and instal ESP8266 (cca 30MB).
+Read more on
+https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
+
+https://github.com/sandeepmistry/esp8266-Arduino
+version 0.0.5 is simple to manually install 
+(just copy to ~/Arduino/hardware) 
+and has pretty stable and fast TCP stack.
+
+Adafruit has some ESP8266 has JSON install but 
+speed and stability of TCP is not the best (old library?).
+in File->Default Settings->Additional Boards Manager URLs enter:
+
+    https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+
+Select pull down menu Tools->Board->Board Manager and instal ESP8266 (cca 30MB). 
+
 
 # Speed
 
