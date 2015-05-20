@@ -92,11 +92,11 @@ Then add support for ESP8266
 
 https://github.com/sandeepmistry/esp8266-Arduino
 version 0.0.5 is simple to install and has pretty 
-stable and fast TCP stack. 
+stable and fast TCP stack.
 
 Adafruit has some ESP8266 which is easy to install but 
 speed and stability of TCP is not the best.
-in File->Default Settings->Additional Boards Manager URLs enter URL:
+in File->Default Settings->Additional Boards Manager URLs enter:
 
     https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
 
@@ -105,10 +105,10 @@ and instal ESP8266 (cca 30MB). Read more on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
 This is the main project that started it all
-If you'd like to compile all tools from source
-this project will build them all and also
-add 8266 in arduino IDE and eclipse:
-https://github.com/esp8266/Arduino
+Automatic installation using JSON is now avaialble
+in File->Default Settings->Additional Boards Manager URLs enter:
+
+    http://arduino.esp8266.com/package_esp8266com_index.json
 
 # Speed
 
