@@ -46,10 +46,8 @@ What works for one FPGA, doesn't neccessary work for the other.
 The GPIO pinout:
     TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16
 
-The Serial pinout.
+The Serial pinout. (wifi-jtag can also serve as tcp-serial bridge)
     RXD2=13, TXD2=15
-Board can enter tcp-serial bridge mode, 
-(experimental/unstable).
 
 ![ESP-12 pinout](/pic/ESP12pinout.jpg)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
@@ -63,24 +61,27 @@ Board can enter tcp-serial bridge mode,
   TCK   | yellow |   D2    | GPIO4  |       1     |    6
   VCC   | red    |   3V3   | VCC    |       4     |    2
   RXD2  | white  |   D7    | GPIO13 |             |TXD 97
-  TXD2  | orange |   D8    | GPIO15 |             |RXD 94
+  TXD2  | orange |   D8    | GPIO15*|             |RXD 94
   GND   | 15k    |         | GPIO15 |             |
   VCC   | 15k    |         | CH_PD  |             |     
   VCC   | 15k    |         | GPIO0  |             |     
   VCC   | 15k    |         | GPIO2  |             |     
   VCC   | 15k    |         | GPIO16 |             |     
 
-For nodemcu it looks like that:
-
-TRST and SRST are reset signals usually used for ARM debugging.
-Most FPGA don't need them. LED may be left unconnected too.
-WIFI-JTAG board can be directly powered from JTAG connector.
+*Warning: at power up, GPIO15 should not be connected to FPGA 
+(let it have only pull down resistor), 
+If left connected, FPGA may pull it up during power on and 
+ESP8266 will not boot.
 
 Avoid using GPIO 0, 2, 15, 16 for JTAG signals, as those
 pins need to be at some default state at power on for ESP8266
 to boot firmware. Use ESP-12 as it has has plenty of GPIO.
 There's complete development board with micro usb:
 https://github.com/nodemcu/nodemcu-devkit
+
+TRST and SRST are reset signals usually used for ARM debugging.
+Most FPGA don't need them. LED may be left unconnected too.
+WIFI-JTAG board can be directly powered from JTAG connector.
 
 # Compiling
 
