@@ -23,7 +23,7 @@
 
 // GPIO pin assignment (e.g. 15 is GPIO15)
 // Try to avoid connecting JTAG to GPIO 0, 2, 15, 16 (board may not boot)
-enum { TDO=12, TDI=13, TCK=14, TMS=5, TRST=0, SRST=2, LED=16 };
+enum { TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16 };
 
 // led logic
 #define LED_ON LOW

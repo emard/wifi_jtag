@@ -21,7 +21,7 @@
 
 // GPIO pin assignment
 // Try to avoid connecting JTAG to GPIO 0, 2, 15, 16 (board may not boot)
-enum { TDO=12, TDI=4, TCK=14, TMS=5, TRST=0, SRST=2, LED=16 };
+enum { TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16 };
 // GPIO 13=RXD2 and 15=TXD2 used as Serial.swap() alternate serial port
 
 enum { MODE_JTAG=0, MODE_SERIAL=1 };
