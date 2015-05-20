@@ -63,6 +63,8 @@ VCC 15k | orange2|         | GPIO2  |             |
 VCC 15k | orange3|         | GPIO16 |             |     
 GND 15k | gray   |         | GPIO15 |             |
 
+For nodemcu it looks like that:
+
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
 WIFI-JTAG board can be directly powered from JTAG connector.
@@ -72,6 +74,9 @@ pins need to be at some default state at power on for ESP8266
 to boot firmware. Use ESP-12 as it has has plenty of GPIO.
 There's complete development board with micro usb:
 https://github.com/nodemcu/nodemcu-devkit
+
+![wiring nodemcu ](/pic/wiring-nodemcu.jpg)
+![wiring Altera TB276](/pic/wiring-tb276.jpg)
 
 # Compiling
 
