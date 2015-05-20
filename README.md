@@ -105,6 +105,7 @@ and instal ESP8266 (cca 30MB). Read more on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
 This is the main project that started it all
+https://github.com/esp8266/Arduino
 Automatic installation using JSON is now avaialble
 in File->Default Settings->Additional Boards Manager URLs enter:
 
