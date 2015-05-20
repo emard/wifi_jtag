@@ -16,8 +16,8 @@
 #include <ESP8266WiFi.h>
 
 // cross reference gpio to nodemcu lua pin numbering
-// esp gpio:     0, 2,15,13,12,14,16
-// lua nodemcu:  3, 4, 8, 7, 6, 5, 0
+// esp gpio:     0, 2, 4, 5,15,13,12,14,16
+// lua nodemcu:  3, 4, 2, 1, 8, 7, 6, 5, 0
 
 // GPIO pin assignment
 // Try to avoid connecting JTAG to GPIO 0, 2, 15, 16 (board may not boot)
@@ -37,7 +37,11 @@ const char* password = "password";
 WiFiServer server(3335);
 WiFiClient client;
 
-#define WATCHDOG 0 // disabled because ESP watchdog is not working
+// 0 disabled watchdog because ESP watchdog is not working
+#define WATCHDOG 0
+// serial RX buffer size
+// it must be buffered otherwise ESP8266 reboots
+#define RXBUFLEN 1024
 
 // activate JTAG outputs
 void jtag_on(void)
@@ -128,6 +132,8 @@ void setup() {
 
 void loop() {
   static uint8_t mode = MODE_JTAG; /* 0-jtag 1-serial */
+  static uint8_t rxbuf[RXBUFLEN]; // rx buffer
+  static size_t rxbufptr = 0;
   // Check if a client has connected
   #if WATCHDOG
   ESP.wdtFeed();
@@ -149,7 +155,6 @@ void loop() {
           if(client.available())
           {
             char c = client.read();
-            // Serial.write(c); 
             switch(c)
             {
               case '0':
@@ -178,9 +183,8 @@ void loop() {
               case 'b':
                 digitalWrite(LED, LED_OFF);
                 break;
-              case 'T':
+              case '\r':
                 jtag_off();
-		// Serial.swap();
                 mode = MODE_SERIAL;
                 break;
               case 'Q':
@@ -196,10 +200,31 @@ void loop() {
           break;
         case MODE_SERIAL:
           if(Serial.available() > 0)
-            client.write(Serial.read());
+          {
+            // buffering prevents from firmware reboot
+            rxbuf[rxbufptr++] = Serial.read();
+            if(rxbufptr >= RXBUFLEN)
+            { // if buffer is full, send it via network
+              client.write((uint8_t *)rxbuf, rxbufptr);
+              rxbufptr = 0;
+            }
+          }
           else
-            if(client.available() > 0)
-              Serial.write(client.read());
+          {
+            if(rxbufptr)
+            { // if something is left in RX buffer, send it via network
+              client.write((uint8_t *)rxbuf, rxbufptr);
+              rxbufptr = 0;              
+            }
+            else
+            {
+              // if no RX then read from network -> serial TX
+              if(client.available() > 0)
+              {
+                Serial.write(client.read());
+              }
+            }
+          }
           yield();
           #if WATCHDOG
           ESP.wdtFeed();
