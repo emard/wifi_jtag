@@ -44,7 +44,12 @@ What works for one FPGA, doesn't neccessary work for the other.
 # Pinout
 
 The GPIO pinout:
-    TDO=12, TDI=13, TCK=14, TMS=5, TRST=0, SRST=2, LED=16
+    TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16
+
+The Serial pinout.
+    RXD2=13, TXD2=15
+Board can enter tcp-serial bridge mode, 
+(experimental/unstable).
 
 ![ESP-12 pinout](/pic/ESP12pinout.jpg)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
@@ -53,15 +58,17 @@ The GPIO pinout:
 --------|--------|---------|--------|-------------|-----------------
   GND   | black  |   GND   | GND    |      10     | 1,3,5,7,9,11,13
   TMS   | violet |   D1    | GPIO5  |       5     |    4
-  TDI   | blue   |   D7    | GPIO13 |       9     |   10
+  TDI   | blue   |   D5    | GPIO14 |       9     |   10
   TDO   | green  |   D6    | GPIO12 |       3     |    8 
-  TCK   | yellow |   D5    | GPIO14 |       1     |    6
+  TCK   | yellow |   D2    | GPIO4  |       1     |    6
   VCC   | red    |   3V3   | VCC    |       4     |    2
-VCC 15k | orange0|         | CH_PD  |             |     
-VCC 15k | orange1|         | GPIO0  |             |     
-VCC 15k | orange2|         | GPIO2  |             |     
-VCC 15k | orange3|         | GPIO16 |             |     
-GND 15k | gray   |         | GPIO15 |             |
+  RXD2  | white  |   D7    | GPIO13 |             |TXD 97
+  TXD2  | orange |   D8    | GPIO15 |             |RXD 94
+  GND   | 15k    |         | GPIO15 |             |
+  VCC   | 15k    |         | CH_PD  |             |     
+  VCC   | 15k    |         | GPIO0  |             |     
+  VCC   | 15k    |         | GPIO2  |             |     
+  VCC   | 15k    |         | GPIO16 |             |     
 
 For nodemcu it looks like that:
 
