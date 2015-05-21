@@ -50,10 +50,10 @@ Serial break resets FPGArduino F32C CPU and enters bootloader,
 which can accept a hex or binary executable file.
 
     telnet jtag.lan 3335
-    K
-    mi32l>
     ctrl-]
     telnet> mode char
+    ctrl-@
+    mi32l>
     mi32l>
     mi32l>
   
@@ -62,6 +62,8 @@ virtual serial port:
     socat -d -d pty,link=/dev/ttyS5,raw,echo=0  tcp:xilinx.lan:3335
   
 sending ascii file over tcp. (executable compiled hex file).
+For serial break to enter bootloader before upload, first
+char of the file should be a null char (ascii 0 aka \0)
 
     socat -u FILE:blink.cpp.hex TCP:jtag.lan:3335
 
