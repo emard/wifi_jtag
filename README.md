@@ -97,7 +97,7 @@ The Serial pinout.
 
 *Warning: for TXD use either GPIO2 or GPIO15, not both.
 If ESP8266 doesn't boot at power up, you mignt try the
-other for TXD or disconnect TXD. We suggest a jumper.
+other pin or disconnect both GPIO2 and GPIO15. We suggest jumpers.
 
 Avoid connecting GPIO 0, 2, 15, 16 to target FPGA, as those
 pins need to be at some default state at power on for ESP8266
