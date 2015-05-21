@@ -89,7 +89,7 @@ The Serial pinout.
   RXD2  |   D7    | GPIO13 | white  |             |TXD 97
   TXD2* |   D8    | GPIO15 | orange*|             |RXD 94
   TXD1* |   D4    | GPIO2  | orange*|             |RXD 94
-  GND   |         | GPIO15 | 15k    |             |
+  GND   |         | GPIO15 | 2.2k   |             |
   VCC   |         | CH_PD  | 15k    |             |     
   VCC   |         | GPIO0  | 15k    |             |     
   VCC   |         | GPIO2  | 15k    |             |     
