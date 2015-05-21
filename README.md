@@ -46,8 +46,25 @@ What works for one FPGA, doesn't neccessary work for the other.
 The GPIO pinout:
     TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16
 
-The Serial pinout. (wifi-jtag can also serve as tcp-serial bridge)
+The Serial pinout.
     RXD2=13, TXD2=15
+wifi-jtag can also serve as tcp-serial bridge.
+Serial break may be issued start of telnet session 
+
+    telnet jtag.lan 3335
+    K<enter> or ctrl-@<enter> for serial BREAK (reset to bootloader)
+    <ctrl-]>
+    telnet> mode char
+    mi32l>
+    mi32l>
+  
+virtual serial port:
+
+    socat -d -d pty,link=/dev/ttyS5,raw,echo=0  tcp:xilinx.lan:3335
+  
+send ascii file to tcp
+
+    socat -u FILE:blink.cpp.hex TCP:jtag.lan:3335
 
 ![ESP-12 pinout](/pic/ESP12pinout.jpg)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
