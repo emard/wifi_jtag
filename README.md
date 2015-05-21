@@ -10,7 +10,7 @@ version of the same, for use with any arduino (without WIFI).
 It can upload SVF bistream over WIFI network to the FPGA. 
 more on http://www.nxlab.fer.hr/fpgarduino/linux_bitstreams.html
 
-Works for FPGA boards TB276 (Altera Cyclone-4) and TB299 (Xilinx Spartan-6)
+Tested and working on FPGA boards TB276 (Altera Cyclone-4) and TB299 (Xilinx Spartan-6)
 
     interface remote_bitbang
     remote_bitbang_port 3335
