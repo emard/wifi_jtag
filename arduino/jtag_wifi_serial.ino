@@ -7,10 +7,17 @@
  *  interface remote_bitbang
  *  remote_bitbang_host jtag.lan
  *  remote_bitbang_port 3335
- 
-  * use software serial
-  https://github.com/ekstrand/ESP8266wifi/blob/master/examples/ESP8266_library_test/ESP8266_library_test.ino
-  
+ *
+ *  telnet jtag.lan 3335
+ *  <ctrl-]>
+ *  telnet> mode c
+ *  mi32l>
+ *
+ *  virtual serial port:
+ *  socat -d -d pty,link=/dev/ttyS5,raw,echo=0  tcp:xilinx.lan:3335
+ *
+ *  send file to tcp
+ *  socat -u FILE:blink.cpp.hex TCP:xilinx.lan:3335
  */
 
 #include <ESP8266WiFi.h>
@@ -94,14 +101,10 @@ void setup() {
   ESP.wdtEnable(1024);
   #endif
   Serial.begin(115200);
-  Serial.swap();
-  // delay(10);
 
   pinMode(LED, OUTPUT);
   
   // Connect to WiFi network
-  //Serial.println();
-  //Serial.println();
   //Serial.print("Connecting to ");
   //Serial.println(ssid);
   
@@ -117,17 +120,27 @@ void setup() {
     delay(500);
     //Serial.print(".");
   }
-  //Serial.println("");
-  //Serial.println("WiFi connected");
   
   // Start the server
   server.begin();
-  //server.setNoDelay(true);
   //Serial.println("Server started");
 
   // Print the IP address
   // Serial.println(WiFi.localIP());
   pinMode(LED, INPUT);
+
+  Serial.swap(); // change serial pins to GPIO 13,15
+}
+
+void serial_break()
+{
+  Serial.swap();
+  Serial.end();
+  Serial.begin(115200);
+  pinMode(15, INPUT); // pull down resistor will make serial break
+  delay(210);
+  Serial.swap(); // break removed. GPIO15 will now become serial port
+  Serial.flush();
 }
 
 void loop() {
@@ -183,8 +196,14 @@ void loop() {
               case 'b':
                 digitalWrite(LED, LED_OFF);
                 break;
+              case 'K': // serial break
+              case '\0':
+                serial_break();
+                Serial.flush();
+                break;
               case '\r':
                 jtag_off();
+                Serial.flush(); // discard stale buffer
                 mode = MODE_SERIAL;
                 break;
               case 'Q':
@@ -196,7 +215,7 @@ void loop() {
           #if WATCHDOG
           ESP.wdtFeed();
           #endif
-          yield();
+          yield(); // handle TCP stack
           break;
         case MODE_SERIAL:
           if(Serial.available() > 0)
@@ -225,7 +244,7 @@ void loop() {
               }
             }
           }
-          yield();
+          yield(); // handle TCP stack
           #if WATCHDOG
           ESP.wdtFeed();
           #endif
