@@ -48,12 +48,14 @@ The GPIO pinout:
 
 The Serial pinout.
     RXD2=13, TXD2=15
-wifi-jtag can also serve as tcp-serial bridge.
-Serial break may be issued start of telnet session 
+wifi-jtag can be useful as tcp-serial bridge, allowing remote
+serial communication over WiFi.
+Serial break may be issued with K or ctrl-@ at start of telnet session.
 
     telnet jtag.lan 3335
-    K<enter> or ctrl-@<enter> for serial BREAK (reset to bootloader)
-    <ctrl-]>
+    K
+    mi32l>
+    ctrl-]
     telnet> mode char
     mi32l>
     mi32l>
