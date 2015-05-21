@@ -49,9 +49,14 @@ WiFiClient client;
 // *** serial port settings ***
 #define BAUDRATE 115200
 
+// 0: use standard  serial pins TX=GPIO1  RX=GPIO3
+// 1: use alternate serial pins TX=GPIO15 RX=GPIO13
+#define SERIAL_SWAP 1
+
 // 0: don't use additional TX
 // 1: use additional TX at GPIO2
-#define TXD_GPIO2 1
+// this option currently doesn't work, leaving it 0
+#define TXD_GPIO2 0
 
 // 0: priority read network, then serial port
 // 1: priority read serial port, then network
@@ -121,7 +126,10 @@ void setup() {
   #if TXD_GPIO2
   Serial1.begin(BAUDRATE);
   #endif
-
+  #if SERIAL_SWAP
+  Serial.swap();
+  #endif
+  
   pinMode(LED, OUTPUT);
   
   // Connect to WiFi network
@@ -148,21 +156,18 @@ void setup() {
   // Print the IP address
   // Serial.println(WiFi.localIP());
   pinMode(LED, INPUT);
-
-  Serial.swap(); // change serial pins to GPIO 13,15
 }
 
 void serial_break()
 {
+  #if SERIAL_SWAP
   Serial.swap(); // second swap should un-swap
+  #endif
   Serial.end(); // shutdown serial port
   #if TXD_GPIO2
   // if we want to drive additional tx line
   Serial1.end(); // shutdown it too
   #endif
-  // Serial.begin(BAUDRATE); // start port but don't swap yet
-  // pinMode(15, INPUT); // pull down resistor will make serial break
-  // maybe we better directly drive it
   pinMode(15, OUTPUT);
   digitalWrite(15, LOW); // line LOW is serial break
   #if TXD_GPIO2
@@ -171,7 +176,9 @@ void serial_break()
   #endif
   delay(210); // at least 200ms we must wait for BREAK to take effect
   Serial.begin(BAUDRATE); // start port just before use
+  #if SERIAL_SWAP
   Serial.swap(); // port started, break removed at GPIO15 (will now become serial TX)
+  #endif
   #if TXD_GPIO2
   Serial1.begin(BAUDRATE); // port started, break removed at GPIO2 (will now become serial TX)
   #endif
