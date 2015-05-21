@@ -41,16 +41,13 @@ Arduino ESP8266.
 
 What works for one FPGA, doesn't neccessary work for the other.
 
-# Pinout
+# TCP-Serial
 
-The GPIO pinout:
-    TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16
-
-The Serial pinout.
-    RXD2=13, TXD2=15
-wifi-jtag can be useful as tcp-serial bridge, allowing remote
-serial communication over WiFi.
+Wifi-jtag can enter tcp-serial bridge mode, thus allowing remote
+serial communication to FPGA over WiFi.
 Serial break may be issued with K or ctrl-@ at start of telnet session.
+Serial break resets FPGArduino F32C CPU and enters bootloader,
+which can accept a hex or binary executable file.
 
     telnet jtag.lan 3335
     K
@@ -64,9 +61,17 @@ virtual serial port:
 
     socat -d -d pty,link=/dev/ttyS5,raw,echo=0  tcp:xilinx.lan:3335
   
-send ascii file to tcp
+sending ascii file over tcp. (executable compiled hex file).
 
     socat -u FILE:blink.cpp.hex TCP:jtag.lan:3335
+
+# Pinout
+
+The GPIO pinout:
+    TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16
+
+The Serial pinout.
+    RXD2=13, TXD2=15
 
 ![ESP-12 pinout](/pic/ESP12pinout.jpg)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
