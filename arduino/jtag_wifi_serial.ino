@@ -51,7 +51,7 @@ WiFiClient client;
 
 // 0: don't use additional TX
 // 1: use additional TX at GPIO2
-#define TXD_GPIO2 0
+#define TXD_GPIO2 1
 
 // 0: priority read network, then serial port
 // 1: priority read serial port, then network
@@ -154,23 +154,23 @@ void setup() {
 
 void serial_break()
 {
-  // Serial.swap(); // second swap should un-swap
+  Serial.swap(); // second swap should un-swap
   Serial.end(); // shutdown serial port
   #if TXD_GPIO2
   // if we want to drive additional tx line
   Serial1.end(); // shutdown it too
   #endif
-  Serial.begin(BAUDRATE); // start port but don't swap yet
-  pinMode(15, INPUT); // pull down resistor will make serial break
+  // Serial.begin(BAUDRATE); // start port but don't swap yet
+  // pinMode(15, INPUT); // pull down resistor will make serial break
   // maybe we better directly drive it
-  // pinMode(15, OUTPUT);
-  // digitalWrite(15, LOW); // line LOW is serial break
+  pinMode(15, OUTPUT);
+  digitalWrite(15, LOW); // line LOW is serial break
   #if TXD_GPIO2
   pinMode(2, OUTPUT);
   digitalWrite(2, LOW);
   #endif
   delay(210); // at least 200ms we must wait for BREAK to take effect
-  // Serial.begin(BAUDRATE); // start port just before use
+  Serial.begin(BAUDRATE); // start port just before use
   Serial.swap(); // port started, break removed at GPIO15 (will now become serial TX)
   #if TXD_GPIO2
   Serial1.begin(BAUDRATE); // port started, break removed at GPIO2 (will now become serial TX)
