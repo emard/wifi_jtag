@@ -38,9 +38,12 @@ enum { MODE_JTAG=0, MODE_SERIAL=1 };
 const char* ssid = "ssid";
 const char* password = "password";
 
+//how many clients should be able to telnet to this ESP8266
+#define MAX_SRV_CLIENTS 1
+
 // specify TCP port to listen on as an argument
 WiFiServer server(3335);
-WiFiClient client;
+WiFiClient clients[MAX_SRV_CLIENTS];
 
 // 0: disabled watchdog because ESP watchdog is not working
 // 1: enable watchdog
@@ -58,11 +61,6 @@ WiFiClient client;
 // this option currently doesn't work, leaving it 0
 #define TXD_GPIO2 0
 
-// 0: priority read network, then serial port
-// 1: priority read serial port, then network
-//    (try both look for firmware freeze)
-#define PRIORITY_RXD 1
-
 // serial RX buffer size
 // it must be buffered otherwise ESP8266 reboots
 // default 1024 bytes
@@ -71,6 +69,8 @@ WiFiClient client;
 // led logic
 #define LED_ON LOW
 #define LED_OFF HIGH
+
+uint8_t jtag_state = 0;
 
 // activate JTAG outputs
 void jtag_on(void)
@@ -83,6 +83,7 @@ void jtag_on(void)
   pinMode(SRST, OUTPUT);
   pinMode(LED, OUTPUT);
   pinMode(TCK, OUTPUT);
+  jtag_state = 1;
 }
 
 // deactivate JTAG outputs: all pins input
@@ -97,6 +98,7 @@ void jtag_off(void)
   pinMode(SRST, INPUT);
   digitalWrite(LED, LED_OFF);
   pinMode(LED, INPUT);
+  jtag_state = 0;
 }
 
 uint8_t jtag_read(void)
@@ -137,11 +139,11 @@ void setup() {
   //Serial.println(ssid);
   
   WiFi.begin(ssid, password);
-  
   while (WiFi.status() != WL_CONNECTED) {
     #if WATCHDOG
     ESP.wdtFeed();
     #endif
+    // blink when trying to connect
     digitalWrite(LED, LED_ON);
     delay(10);
     digitalWrite(LED, LED_OFF);
@@ -151,6 +153,7 @@ void setup() {
   
   // Start the server
   server.begin();
+  server.setNoDelay(true);
   //Serial.println("Server started");
 
   // Print the IP address
@@ -186,30 +189,47 @@ void serial_break()
 }
 
 void loop() {
-  static uint8_t mode = MODE_JTAG; /* 0-jtag 1-serial */
-  static uint8_t rxbuf[RXBUFLEN]; // rx buffer
-  static size_t rxbufptr = 0;
-  // Check if a client has connected
+  static uint8_t mode = MODE_JTAG; // start with JTAG remote_bitbang mode
+  uint8_t i;
+  uint8_t nconn = 0;
+
+  //check if there are any new clients
+  if (server.hasClient()){
+    for(i = 0; i < MAX_SRV_CLIENTS; i++){
+      //find free/disconnected spot
+      if (!clients[i] || !clients[i].connected()){
+        if(clients[i]) clients[i].stop();
+        clients[i] = server.available();
+        // Serial1.print("New client: "); Serial1.print(i);
+        mode = MODE_JTAG;
+        if(jtag_state == 0)
+          jtag_on();
+        continue;
+      }
+    }
+    //no free/disconnected spot so reject
+    WiFiClient client_reject = server.available();
+    client_reject.stop();
+    delay(1);
+  }
+  
   #if WATCHDOG
   ESP.wdtFeed();
   #endif
-  client = server.available();
-  if(client)
+  
+  nconn = 0; // counts number of clients currently connected
+  //check clients for data
+  for(i = 0; i < MAX_SRV_CLIENTS; i++)
   {
-    // Serial.println("new client");
-    //if(mode == MODE_SERIAL)
-    //   Serial.swap();
-    mode = MODE_JTAG;
-    jtag_on();
-    while(client.connected())
+    if (clients[i] && clients[i].connected())
     {
-      // loop infinitely until incoming data are available
-      switch(mode)
-      {
-        case MODE_JTAG:
-          if(client.available())
+        nconn++;
+        // client has connected. if JTAG interface was off, turn it on 
+        while(clients[i].available())
+        {
+          if(mode == MODE_JTAG)
           {
-            char c = client.read();
+            char c = clients[i].read();
             switch(c)
             {
               case '0':
@@ -223,8 +243,7 @@ void loop() {
                 jtag_write(c & 7); // it's the same as ((c-'0') & 7)
                 break;
               case 'R':
-                client.write('0'+jtag_read());
-                yield();
+                clients[i].write('0'+jtag_read());
                 break;
               case 'r':
               case 's':
@@ -240,99 +259,50 @@ void loop() {
                 break;
               case '\0': // ctrl-@ (byte 0x00) sends serial BREAK
                 serial_break();
-                Serial.flush();
                 break;
               case '\r':
                 jtag_off();
-                Serial.flush(); // discard stale buffer
                 mode = MODE_SERIAL;
                 break;
               case 'Q':
-                client.flush();
-                client.stop(); // disconnect client's TCP
+                clients[i].stop(); // disconnect client's TCP
                 break;
             } /* end switch */
+          } // end mode == JTAG
+          else
+          {
+            // get data from the telnet client and push it to the UART
+            if(mode == MODE_SERIAL)
+              Serial.write(clients[i].read());
           }
+         
           #if WATCHDOG
           ESP.wdtFeed();
           #endif
-          yield(); // handle TCP stack
-          break;
-        case MODE_SERIAL:
-          #if PRIORITY_RXD
-          // priority read serial, then network
-          if(Serial.available() > 0)
-          {
-            // buffering prevents from firmware reboot
-            rxbuf[rxbufptr++] = Serial.read();
-            if(rxbufptr >= RXBUFLEN)
-            { // if buffer is full, send it via network
-              client.write((uint8_t *)rxbuf, rxbufptr);
-              rxbufptr = 0;
-            }
-          }
-          else
-          {
-            if(rxbufptr)
-            { // if something is left in RX buffer, send it via network
-              client.write((uint8_t *)rxbuf, rxbufptr);
-              rxbufptr = 0;              
-            }
-            else
-            {
-              // if no RX then read from network -> serial TX
-              if(client.available() > 0)
-              {
-                char c = client.read();
-                Serial.write(c);
-                #if TXD_GPIO2
-                Serial1.write(c);
-                #endif
-              }
-            }
-          }
-          #else
-          // priority read network, then serial
-          if(client.available() > 0)
-          {
-            char c = client.read();
-            Serial.write(c);
-            #if TXD_GPIO2
-            Serial1.write(c);
-            #endif
-          }
-          else
-          {
-            if(Serial.available() > 0)
-            {
-              // buffering prevents from firmware reboot
-              rxbuf[rxbufptr++] = Serial.read();
-              if(rxbufptr >= RXBUFLEN)
-              { // if buffer is full, send it via network
-                client.write((uint8_t *)rxbuf, rxbufptr);
-                rxbufptr = 0;
-              }
-            }
-            else
-            {
-              if(rxbufptr)
-              { // if something is left in RX buffer, send it via network
-                client.write((uint8_t *)rxbuf, rxbufptr);
-                rxbufptr = 0;              
-              }
-            }
-          }
-          #endif
-          yield(); // handle TCP stack
-          #if WATCHDOG
-          ESP.wdtFeed();
-          #endif
-          break;
-      } /* end switch */   
+        }
     }
-    jtag_off();
-    client.flush();
-    client.stop();
-    // Serial.println("client disonnected");
+  }
+
+  if(nconn == 0)
+  {
+    // all clients disconnected
+    // JTAG interface off
+    if(jtag_state != 0)
+      jtag_off();
+  }
+
+  //check UART for data
+  if(Serial.available()){
+    size_t len = Serial.available();
+    uint8_t sbuf[len];
+    Serial.readBytes(sbuf, len);
+    //push UART data to all connected telnet clients
+    if(mode == MODE_SERIAL)
+      for(i = 0; i < MAX_SRV_CLIENTS; i++){
+        if (clients[i] && clients[i].connected()){
+          clients[i].write(sbuf, len);
+          delay(1);
+        }
+      }
   }
 }
