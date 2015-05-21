@@ -87,16 +87,17 @@ The Serial pinout.
   TCK   |   D2    | GPIO4  | yellow |       1     |    6
   VCC   |   3V3   | VCC    | red    |       4     |    2
   RXD2  |   D7    | GPIO13 | white  |             |TXD 97
-  TXD2  |   D8    | GPIO15*| orange |             |RXD 94
-  TXD1  |   D4    | GPIO2* | orange |             |RXD 94 
+  TXD2* |   D8    | GPIO15 | orange*|             |RXD 94
+  TXD1* |   D4    | GPIO2  | orange*|             |RXD 94
   GND   |         | GPIO15 | 15k    |             |
   VCC   |         | CH_PD  | 15k    |             |     
   VCC   |         | GPIO0  | 15k    |             |     
   VCC   |         | GPIO2  | 15k    |             |     
   VCC   |         | GPIO16 | 15k    |             |     
 
-*Warning: if ESP8266 doesn't boot at power up, you mignt try
-to disconnect GPIO15 and/or GPIO2
+*Warning: for TXD use either GPIO2 or GPIO15, not both.
+If ESP8266 doesn't boot at power up, you mignt try the
+other for TXD or disconnect TXD. We suggest a jumper.
 
 Avoid connecting GPIO 0, 2, 15, 16 to target FPGA, as those
 pins need to be at some default state at power on for ESP8266
