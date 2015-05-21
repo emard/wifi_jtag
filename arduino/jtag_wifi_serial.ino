@@ -11,6 +11,7 @@
  *  telnet jtag.lan 3335
  *  <ctrl-]>
  *  telnet> mode c
+ *  <ctrl-@>
  *  mi32l>
  *
  *  virtual serial port:
@@ -29,13 +30,10 @@
 // GPIO pin assignment
 // Try to avoid connecting JTAG to GPIO 0, 2, 15, 16 (board may not boot)
 enum { TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16 };
-// GPIO 13=RXD2 and 15=TXD2 used as Serial.swap() alternate serial port
+// RXD=GPIO13 and TXD=GPIO15 used as Serial.swap() alternate serial port
+// additional TXD=GPIO2 (#define TXD_GPIO2 1)
 
 enum { MODE_JTAG=0, MODE_SERIAL=1 };
-
-// led logic
-#define LED_ON LOW
-#define LED_OFF HIGH
 
 const char* ssid = "ssid";
 const char* password = "password";
@@ -44,11 +42,30 @@ const char* password = "password";
 WiFiServer server(3335);
 WiFiClient client;
 
-// 0 disabled watchdog because ESP watchdog is not working
+// 0: disabled watchdog because ESP watchdog is not working
+// 1: enable watchdog
 #define WATCHDOG 0
+
+// *** serial port settings ***
+#define BAUDRATE 115200
+
+// 0: don't use additional TX
+// 1: use additional TX at GPIO2
+#define TXD_GPIO2 0
+
+// 0: priority read network, then serial port
+// 1: priority read serial port, then network
+//    (try both look for firmware freeze)
+#define PRIORITY_RXD 1
+
 // serial RX buffer size
 // it must be buffered otherwise ESP8266 reboots
+// default 1024 bytes
 #define RXBUFLEN 1024
+
+// led logic
+#define LED_ON LOW
+#define LED_OFF HIGH
 
 // activate JTAG outputs
 void jtag_on(void)
@@ -100,7 +117,10 @@ void setup() {
   #if WATCHDOG
   ESP.wdtEnable(1024);
   #endif
-  Serial.begin(115200);
+  Serial.begin(BAUDRATE);
+  #if TXD_GPIO2
+  Serial1.begin(BAUDRATE);
+  #endif
 
   pinMode(LED, OUTPUT);
   
@@ -134,12 +154,27 @@ void setup() {
 
 void serial_break()
 {
-  Serial.swap();
-  Serial.end();
-  Serial.begin(115200);
+  // Serial.swap(); // second swap should un-swap
+  Serial.end(); // shutdown serial port
+  #if TXD_GPIO2
+  // if we want to drive additional tx line
+  Serial1.end(); // shutdown it too
+  #endif
+  Serial.begin(BAUDRATE); // start port but don't swap yet
   pinMode(15, INPUT); // pull down resistor will make serial break
-  delay(210);
-  Serial.swap(); // break removed. GPIO15 will now become serial port
+  // maybe we better directly drive it
+  // pinMode(15, OUTPUT);
+  // digitalWrite(15, LOW); // line LOW is serial break
+  #if TXD_GPIO2
+  pinMode(2, OUTPUT);
+  digitalWrite(2, LOW);
+  #endif
+  delay(210); // at least 200ms we must wait for BREAK to take effect
+  // Serial.begin(BAUDRATE); // start port just before use
+  Serial.swap(); // port started, break removed at GPIO15 (will now become serial TX)
+  #if TXD_GPIO2
+  Serial1.begin(BAUDRATE); // port started, break removed at GPIO2 (will now become serial TX)
+  #endif
   Serial.flush();
 }
 
@@ -196,8 +231,7 @@ void loop() {
               case 'b':
                 digitalWrite(LED, LED_OFF);
                 break;
-              case 'K': // serial break
-              case '\0':
+              case '\0': // ctrl-@ (byte 0x00) sends serial BREAK
                 serial_break();
                 Serial.flush();
                 break;
@@ -218,6 +252,8 @@ void loop() {
           yield(); // handle TCP stack
           break;
         case MODE_SERIAL:
+          #if PRIORITY_RXD
+          // priority read serial, then network
           if(Serial.available() > 0)
           {
             // buffering prevents from firmware reboot
@@ -240,10 +276,46 @@ void loop() {
               // if no RX then read from network -> serial TX
               if(client.available() > 0)
               {
-                Serial.write(client.read());
+                char c = client.read();
+                Serial.write(c);
+                #if TXD_GPIO2
+                Serial1.write(c);
+                #endif
               }
             }
           }
+          #else
+          // priority read network, then serial
+          if(client.available() > 0)
+          {
+            char c = client.read();
+            Serial.write(c);
+            #if TXD_GPIO2
+            Serial1.write(c);
+            #endif
+          }
+          else
+          {
+            if(Serial.available() > 0)
+            {
+              // buffering prevents from firmware reboot
+              rxbuf[rxbufptr++] = Serial.read();
+              if(rxbufptr >= RXBUFLEN)
+              { // if buffer is full, send it via network
+                client.write((uint8_t *)rxbuf, rxbufptr);
+                rxbufptr = 0;
+              }
+            }
+            else
+            {
+              if(rxbufptr)
+              { // if something is left in RX buffer, send it via network
+                client.write((uint8_t *)rxbuf, rxbufptr);
+                rxbufptr = 0;              
+              }
+            }
+          }
+          #endif
           yield(); // handle TCP stack
           #if WATCHDOG
           ESP.wdtFeed();
