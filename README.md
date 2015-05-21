@@ -73,33 +73,32 @@ The GPIO pinout:
     TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16
 
 The Serial pinout.
-    RXD2=13, TXD2=15
+    RXD=13, TXD=15, (additional TXD=2)
 
 ![ESP-12 pinout](/pic/ESP12pinout.jpg)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
 
-  PIN   | color  | nodemcu | ESP-12 |TB276 10-pin |TB299 14-pin
---------|--------|---------|--------|-------------|-----------------
-  GND   | black  |   GND   | GND    |      10     | 1,3,5,7,9,11,13
-  TMS   | violet |   D1    | GPIO5  |       5     |    4
-  TDI   | blue   |   D5    | GPIO14 |       9     |   10
-  TDO   | green  |   D6    | GPIO12 |       3     |    8 
-  TCK   | yellow |   D2    | GPIO4  |       1     |    6
-  VCC   | red    |   3V3   | VCC    |       4     |    2
-  RXD2  | white  |   D7    | GPIO13 |             |TXD 97
-  TXD2  | orange |   D8    | GPIO15*|             |RXD 94
-  GND   | 15k    |         | GPIO15 |             |
-  VCC   | 15k    |         | CH_PD  |             |     
-  VCC   | 15k    |         | GPIO0  |             |     
-  VCC   | 15k    |         | GPIO2  |             |     
-  VCC   | 15k    |         | GPIO16 |             |     
+  PIN   | nodemcu | ESP-12 | wire   |TB276 10-pin |TB299 14-pin
+--------|---------|--------|--------|-------------|-----------------
+  GND   |   GND   | GND    | black  |      10     | 1,3,5,7,9,11,13
+  TMS   |   D1    | GPIO5  | violet |       5     |    4
+  TDI   |   D5    | GPIO14 | blue   |       9     |   10
+  TDO   |   D6    | GPIO12 | green  |       3     |    8 
+  TCK   |   D2    | GPIO4  | yellow |       1     |    6
+  VCC   |   3V3   | VCC    | red    |       4     |    2
+  RXD2  |   D7    | GPIO13 | white  |             |TXD 97
+  TXD2  |   D8    | GPIO15*| orange |             |RXD 94
+  TXD1  |   D4    | GPIO2* | orange |             |RXD 94 
+  GND   |         | GPIO15 | 15k    |             |
+  VCC   |         | CH_PD  | 15k    |             |     
+  VCC   |         | GPIO0  | 15k    |             |     
+  VCC   |         | GPIO2  | 15k    |             |     
+  VCC   |         | GPIO16 | 15k    |             |     
 
-*Warning: at power up, GPIO15 should not be connected to FPGA 
-(let it have only pull down resistor), 
-If left connected, FPGA may pull it up during power on and 
-ESP8266 will not boot.
+*Warning: if ESP8266 doesn't boot at power up, you mignt try
+to disconnect GPIO15 and/or GPIO2
 
-Avoid using GPIO 0, 2, 15, 16 for JTAG signals, as those
+Avoid connecting GPIO 0, 2, 15, 16 to target FPGA, as those
 pins need to be at some default state at power on for ESP8266
 to boot firmware. Use ESP-12 as it has has plenty of GPIO.
 There's complete development board with micro usb:
