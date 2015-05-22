@@ -170,7 +170,10 @@ Time uploading FPGArduino https://github.com/f32c
 # Reliability
 
 Firmware is useable but not completely stable.
-It may sometimes stop working when just connected 
+After one JTAG TCP connection, it is good
+to wait few seconds for the sockets to close
+properly before next connection.
+It may sometimes stop responding when just connected 
 to WIFI access point even if JTAG is not used.
 We recommend to power it on just before use.
 
