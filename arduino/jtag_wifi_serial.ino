@@ -43,13 +43,10 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include <ESP8266WiFi.h>
-
 
 const char* ssid = "ssid";
 const char* password = "password";
-
 
 // cross reference gpio to nodemcu lua pin numbering
 // esp gpio:     0, 2, 4, 5,15,13,12,14,16
@@ -65,15 +62,12 @@ enum { MODE_JTAG=0, MODE_SERIAL=1 };
 
 uint8_t mode = MODE_JTAG; // input parser mode JTAG (remote bitbang)
 
-//how many clients should be able to telnet to this ESP8266
-#define MAX_SRV_CLIENTS 1
-
 // *** serial port settings ***
 #define BAUDRATE 115200
 
-// 0: use standard  serial pins TX=GPIO1  RX=GPIO3
+// use standard  serial pins TX=GPIO1  RX=GPIO3
 //#define SERIAL_SWAP()
-// 1: use alternate serial pins TX=GPIO15 RX=GPIO13
+// use alternate serial pins TX=GPIO15 RX=GPIO13
 #define SERIAL_SWAP() Serial.swap()
 
 // 0: don't use additional TX
@@ -81,14 +75,18 @@ uint8_t mode = MODE_JTAG; // input parser mode JTAG (remote bitbang)
 // this option currently doesn't work, leaving it 0
 #define TXD_GPIO2 0
 
+//how many clients should be able to telnet to this ESP8266
+#define MAX_SRV_CLIENTS 1
+
 WiFiServer server(3335);
 WiFiClient serverClients[MAX_SRV_CLIENTS];
 
 // led logic
 #define LED_ON LOW
 #define LED_OFF HIGH
+#define LED_DIM INPUT_PULLDOWN
 
-uint8_t jtag_state = 0;
+uint8_t jtag_state = 0; // 0:off 1:on
 
 // activate JTAG outputs
 void jtag_on(void)
@@ -140,6 +138,8 @@ void jtag_reset(uint8_t trst_srst)
 
 void serial_break()
 {
+  pinMode(LED, LED_DIM);
+  digitalWrite(LED, LED_ON);
   SERIAL_SWAP();
   Serial.end(); // shutdown serial port
   #if TXD_GPIO2
@@ -159,6 +159,8 @@ void serial_break()
   #if TXD_GPIO2
   Serial1.begin(BAUDRATE); // port started, break removed at GPIO2 (will now become serial TX)
   #endif
+  pinMode(LED, INPUT);
+  digitalWrite(LED, LED_OFF);
   Serial.flush();
 }
 
@@ -213,19 +215,27 @@ void tcp_parser(WiFiClient *client)
   {
     // get data from the telnet client and push it to the UART
     if(mode == MODE_SERIAL)
+    {
+      pinMode(LED, OUTPUT);
+      digitalWrite(LED, LED_ON);
       Serial.write(client->read());
+      digitalWrite(LED, LED_OFF);
+    }
   }
 }
 
 void setup() {
+  jtag_off();
+  pinMode(LED, OUTPUT);
   Serial1.begin(BAUDRATE);
   WiFi.begin(ssid, password);
   Serial1.print("\nConnecting to "); Serial1.println(ssid);
-  uint8_t i = 0;
-  while (WiFi.status() != WL_CONNECTED && i++ < 20) delay(500);
-  if(i == 21){
-    Serial1.print("Could not connect to"); Serial1.println(ssid);
-    while(1) delay(500);
+  while (WiFi.status() != WL_CONNECTED)
+  { // blink LED when trying to connect
+    digitalWrite(LED, LED_ON);
+    delay(10);
+    digitalWrite(LED, LED_OFF);
+    delay(500);
   }
   //start UART and the server
   Serial.begin(BAUDRATE);
@@ -235,7 +245,7 @@ void setup() {
   
   Serial1.print("Ready! Use 'telnet ");
   Serial1.print(WiFi.localIP());
-  Serial1.println(" 21' to connect");
+  Serial1.println(" 3335' to connect");
 }
 
 void loop() {
@@ -249,6 +259,8 @@ void loop() {
         serverClients[i] = server.available();
         Serial1.print("New client: "); Serial1.print(i);
         mode = MODE_JTAG;
+        if(jtag_state == 0)
+          jtag_on();
         continue;
       }
     }
@@ -274,9 +286,13 @@ void loop() {
     //push UART data to all connected telnet clients
     for(i = 0; i < MAX_SRV_CLIENTS; i++){
       if (mode == MODE_SERIAL)
-      if (serverClients[i] && serverClients[i].connected()){
-        serverClients[i].write(sbuf, len);
-        delay(1);
+      {
+        if (serverClients[i] && serverClients[i].connected()){
+          pinMode(LED, LED_DIM);
+          serverClients[i].write(sbuf, len);
+          delay(1);
+          pinMode(LED, INPUT);
+        }
       }
     }
   }
