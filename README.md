@@ -120,7 +120,7 @@ WIFI-JTAG board can be directly powered from JTAG connector.
 
 To flash firmware into ESP8266 connect 3.3V USBSERIAL adapter:
 
-USBSERIAL | wire   |ESP-12E  
+USBSERIAL | wire   |ESP-12
 ----------|--------|-----------
 GND       | black  | GND
 GND       | 1k     | GPIO15
