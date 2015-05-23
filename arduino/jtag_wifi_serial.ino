@@ -66,9 +66,9 @@ uint8_t mode = MODE_JTAG; // input parser mode JTAG (remote bitbang)
 #define BAUDRATE 115200
 
 // use standard  serial pins TX=GPIO1  RX=GPIO3
-//#define SERIAL_SWAP()
+#define SERIAL_SWAP 0
 // use alternate serial pins TX=GPIO15 RX=GPIO13
-#define SERIAL_SWAP() Serial.swap()
+//#define SERIAL_SWAP 1
 
 // 0: don't use additional TX
 // 1: use additional TX at GPIO2
@@ -140,14 +140,21 @@ void serial_break()
 {
   pinMode(LED, LED_DIM);
   digitalWrite(LED, LED_ON);
-  SERIAL_SWAP();
+  #if SERIAL_SWAP
+  Serial.swap();
+  #endif
   Serial.end(); // shutdown serial port
   #if TXD_GPIO2
   // if we want to drive additional tx line
   Serial1.end(); // shutdown it too
   #endif
+  #if SERIAL_SWAP
   pinMode(15, OUTPUT);
   digitalWrite(15, LOW); // line LOW is serial break
+  #else
+  pinMode(1, OUTPUT);
+  digitalWrite(1, LOW); // line LOW is serial break  
+  #endif
   #if TXD_GPIO2
   pinMode(2, OUTPUT);
   digitalWrite(2, LOW);
@@ -155,7 +162,9 @@ void serial_break()
   delay(210); // at least 200ms we must wait for BREAK to take effect
   Serial.begin(BAUDRATE); // start port just before use
   // remove serial break either above or after swap
-  SERIAL_SWAP();
+  #if SERIAL_SWAP
+  Serial.swap();
+  #endif
   #if TXD_GPIO2
   Serial1.begin(BAUDRATE); // port started, break removed at GPIO2 (will now become serial TX)
   #endif
@@ -239,7 +248,9 @@ void setup() {
   }
   //start UART and the server
   Serial.begin(BAUDRATE);
-  SERIAL_SWAP();
+  #if SERIAL_SWAP
+  Serial.swap();
+  #endif
   server.begin();
   server.setNoDelay(true);
   
