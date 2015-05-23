@@ -72,8 +72,9 @@ char of the file should be a null char (ascii 0 aka \0)
 The GPIO pinout:
     TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16
 
-The Serial pinout.
-    RXD=13, TXD=15, (additional TXD=2)
+The serial pinout is standard RXD and TXD.
+The alternte serial pinout (if compiled with SERIAL_SWAP 1):
+    RXD=13, TXD=15
 
 ![ESP-12 pinout](/pic/esp-12_pindef.png)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
