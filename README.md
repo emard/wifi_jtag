@@ -75,10 +75,10 @@ The GPIO pinout:
 The Serial pinout.
     RXD=13, TXD=15, (additional TXD=2)
 
-![ESP-12 pinout](/pic/ESP12pinout.jpg)
+![ESP-12 pinout](/pic/esp-12_pindef.png)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
 
-  PIN   | nodemcu | ESP-12 | wire   |TB276 10-pin |TB299 14-pin
+  PIN   | nodemcu | ESP-12E| wire   |TB276 10-pin |TB299 14-pin
 --------|---------|--------|--------|-------------|-----------------
   GND   |   GND   | GND    | black  |      10     | 1,3,5,7,9,11,13
   TMS   |   D1    | GPIO5  | violet |       5     |    4
@@ -86,18 +86,25 @@ The Serial pinout.
   TDO   |   D6    | GPIO12 | green  |       3     |    8 
   TCK   |   D2    | GPIO4  | yellow |       1     |    6
   VCC   |   3V3   | VCC    | red    |       4     |    2
+  TXD0  |   D10   | GPIO1  | orange |             |RXD 94
+  RXD0  |   D9    | GPIO3  | white  |             |TXD 97
+  TXD2  |   D8    | GPIO15 | orange |             |RXD 94
   RXD2  |   D7    | GPIO13 | white  |             |TXD 97
-  TXD2* |   D8    | GPIO15 | orange*|             |RXD 94
-  TXD1* |   D4    | GPIO2  | orange*|             |RXD 94
-  GND   |         | GPIO15 | 2.2k   |             |
-  VCC   |         | CH_PD  | 15k    |             |     
+  GND   |         | GPIO15 | 1k     |             |
+  VCC   |         | CH_PD  | 1k     |             |     
   VCC   |         | GPIO0  | 15k    |             |     
   VCC   |         | GPIO2  | 15k    |             |     
-  VCC   |         | GPIO16 | 15k    |             |     
+  VCC   |         | REST   | 15k    |             |     
 
-*Warning: for TXD use either GPIO2 or GPIO15, not both.
+Warning1: use either TXD0/RXD0 or TXD2/RXD2 not 0 and 2 at the same time.
 If ESP8266 doesn't boot at power up, you mignt try the
-other pin or disconnect both GPIO2 and GPIO15. We suggest jumpers.
+other pin or disconnect both GPIO2 and GPIO15.
+
+Warning2: Older ESP-12 modules have GPIO4 and GPIO5 swapped.
+There are some ESP-12E modules and breakout boards with
+old labeling for ESP-12. If it doesn't work, try swapping GPIO4 and GPIO5.
+See ESP8266 family pinouts:
+http://www.esp8266.com/wiki/doku.php?id=esp8266-module-family
 
 Avoid connecting GPIO 0, 2, 15, 16 to target FPGA, as those
 pins need to be at some default state at power on for ESP8266
@@ -108,6 +115,22 @@ https://github.com/nodemcu/nodemcu-devkit
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
 WIFI-JTAG board can be directly powered from JTAG connector.
+
+# Flashing
+
+If you need to flash firmware into ESP8266 this is the pinout
+
+ESP-12E | wire   | RS232 signal
+--------|--------|-----------------
+ GND    | black  | GND
+ VCC    | red    | VCC 3.3V
+ TXD    | orange |
+ RXD    | white  |
+ GPIO15 | 1k     |
+ CH_PD  | 1k     |     
+ GPIO0  | green  | DTR    
+ REST   | yellow | RTS     
+
 
 # Compiling
 
