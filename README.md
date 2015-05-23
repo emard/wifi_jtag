@@ -87,8 +87,8 @@ The alternte serial pinout (if compiled with SERIAL_SWAP 1):
   TDO   |   D6    |   GPIO12   | green  |       3     |    8
   TCK   |   D2    |   GPIO4    | yellow |       1     |    6
   VCC   |   3V3   |   VCC      | red    |       4     |    2
-  TXD0  |   D10   |   GPIO1    | orange |             |RXD 94
-  RXD0  |   D9    |   GPIO3    | white  |             |TXD 97
+  TXD0  |   D10   |TXD or GPIO1| orange |             |RXD 94
+  RXD0  |   D9    |RXD or GPIO3| white  |             |TXD 97
   TXD2  |   D8    |   GPIO15   | orange |             |RXD 94
   RXD2  |   D7    |   GPIO13   | white  |             |TXD 97
   GND   |         |   GPIO15   | 1k     |             |
