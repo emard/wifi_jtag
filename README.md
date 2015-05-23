@@ -79,7 +79,7 @@ The alternte serial pinout (if compiled with SERIAL_SWAP 1):
 ![ESP-12 pinout](/pic/esp-12_pindef.png)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
 
-  PIN   | nodemcu |   ESP-12E  | wire   |TB276 10-pin |TB299 14-pin
+  PIN   | nodemcu |   ESP-12   | wire   |TB276 10-pin |TB299 14-pin
 --------|---------|------------|--------|-------------|----------------
   GND   |   GND   |   GND      | black  |      10     | 1,3,5,7,9,11,13
   TMS   |   D1    |   GPIO5    | violet |       5     |    4
@@ -101,9 +101,8 @@ Warning1: use either TXD0/RXD0 or TXD2/RXD2 not 0 and 2 at the same time.
 If ESP8266 doesn't boot at power up, you mignt try the
 other pin or disconnect both GPIO2 and GPIO15.
 
-Warning2: Older ESP-12 modules have GPIO4 and GPIO5 swapped.
-There are some ESP-12E modules and breakout boards with
-old labeling for ESP-12. If it doesn't work, try swapping GPIO4 and GPIO5.
+Warning2: Some ESP-12 modules and breakout boards have GPIO4 and GPIO5 swapped
+and wrong labeling for them. If it doesn't work, try swapping GPIO4 and GPIO5.
 See ESP8266 family pinouts:
 http://www.esp8266.com/wiki/doku.php?id=esp8266-module-family
 
