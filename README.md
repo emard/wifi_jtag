@@ -118,18 +118,18 @@ WIFI-JTAG board can be directly powered from JTAG connector.
 
 # Flashing
 
-If you need to flash firmware into ESP8266 this is the pinout
+To flash firmware into ESP8266 connect 3.3V USBSERIAL adapter:
 
-ESP-12E | wire   | RS232 signal
---------|--------|-----------------
- GND    | black  | GND
- VCC    | red    | VCC 3.3V
- TXD    | orange |
- RXD    | white  |
- GPIO15 | 1k     |
- CH_PD  | 1k     |     
- GPIO0  | green  | DTR    
- REST   | yellow | RTS     
+USBSERIAL | wire   |ESP-12E  
+----------|--------|-----------
+GND       | black  | GND
+GND       | 1k     | GPIO15
+VCC       | red    | VCC 3.3V
+VCC       | 1k     | CH_PD
+RXD       | orange | TXD
+TXD       | white  | RXD
+DTR       | green  | GPIO0
+RTS       | yellow | REST
 
 
 # Compiling
