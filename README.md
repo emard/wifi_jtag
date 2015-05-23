@@ -78,23 +78,23 @@ The Serial pinout.
 ![ESP-12 pinout](/pic/esp-12_pindef.png)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
 
-  PIN   | nodemcu | ESP-12E| wire   |TB276 10-pin |TB299 14-pin
---------|---------|--------|--------|-------------|-----------------
-  GND   |   GND   | GND    | black  |      10     | 1,3,5,7,9,11,13
-  TMS   |   D1    | GPIO5  | violet |       5     |    4
-  TDI   |   D5    | GPIO14 | blue   |       9     |   10
-  TDO   |   D6    | GPIO12 | green  |       3     |    8 
-  TCK   |   D2    | GPIO4  | yellow |       1     |    6
-  VCC   |   3V3   | VCC    | red    |       4     |    2
-  TXD0  |   D10   | GPIO1  | orange |             |RXD 94
-  RXD0  |   D9    | GPIO3  | white  |             |TXD 97
-  TXD2  |   D8    | GPIO15 | orange |             |RXD 94
-  RXD2  |   D7    | GPIO13 | white  |             |TXD 97
-  GND   |         | GPIO15 | 1k     |             |
-  VCC   |         | CH_PD  | 1k     |             |     
-  VCC   |         | GPIO0  | 15k    |             |     
-  VCC   |         | GPIO2  | 15k    |             |     
-  VCC   |         | REST   | 15k    |             |     
+  PIN   | nodemcu |   ESP-12E  | wire   |TB276 10-pin |TB299 14-pin
+--------|---------|------------|--------|-------------|----------------
+  GND   |   GND   |   GND      | black  |      10     | 1,3,5,7,9,11,13
+  TMS   |   D1    |   GPIO5    | violet |       5     |    4
+  TDI   |   D5    |   GPIO14   | blue   |       9     |   10
+  TDO   |   D6    |   GPIO12   | green  |       3     |    8
+  TCK   |   D2    |   GPIO4    | yellow |       1     |    6
+  VCC   |   3V3   |   VCC      | red    |       4     |    2
+  TXD0  |   D10   |   GPIO1    | orange |             |RXD 94
+  RXD0  |   D9    |   GPIO3    | white  |             |TXD 97
+  TXD2  |   D8    |   GPIO15   | orange |             |RXD 94
+  RXD2  |   D7    |   GPIO13   | white  |             |TXD 97
+  GND   |         |   GPIO15   | 1k     |             |
+  VCC   |         | EN or CH_PD| 1k     |             |
+  VCC   |         |   GPIO0    | 15k    |             |
+  VCC   |         |   GPIO2    | 15k    |             |
+  VCC   |         |   REST     | 15k    |             |
 
 Warning1: use either TXD0/RXD0 or TXD2/RXD2 not 0 and 2 at the same time.
 If ESP8266 doesn't boot at power up, you mignt try the
@@ -125,7 +125,7 @@ USBSERIAL | wire   |ESP-12E
 GND       | black  | GND
 GND       | 1k     | GPIO15
 VCC       | red    | VCC 3.3V
-VCC       | 1k     | CH_PD
+VCC       | 1k     | EN or CH_PD
 RXD       | orange | TXD
 TXD       | white  | RXD
 DTR       | green  | GPIO0
