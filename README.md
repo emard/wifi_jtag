@@ -102,9 +102,9 @@ See ESP8266 family pinouts:
 http://www.esp8266.com/wiki/doku.php?id=esp8266-module-family
 
 Avoid connecting GPIO 0, 2, 15 (and 16 on some ESP) to target FPGA, 
-as those pins need to be at some default state at power on for ESP8266
-to boot firmware. If it doesn't boot, they need to be disconnected
-during first second of powering up the ESP8266.
+as those pins need to be at some default state during first second 
+of power on for ESP8266 to boot firmware. If it doesn't boot, 
+they need to be disconnected during first second of powering up the ESP8266.
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
