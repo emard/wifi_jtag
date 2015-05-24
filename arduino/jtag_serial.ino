@@ -18,12 +18,17 @@
 #endif
 
 // cross reference gpio to nodemcu lua pin numbering
-// esp gpio:     0, 2,15,13,12,14,16
-// lua nodemcu:  3, 4, , 7, 6, 5, 0
+// esp       GPIO: 0, 2, 4, 5,15,13,12,14,16
+// lua nodemcu  D: 3, 4, 2, 1, 8, 7, 6, 5, 0
 
 // GPIO pin assignment (e.g. 15 is GPIO15)
-// Try to avoid connecting JTAG to GPIO 0, 2, 15, 16 (board may not boot)
-enum { TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16 };
+// Try to avoid connecting JTAG to GPIO 0, 2, 15, (and 16 on some boards), as board may not boot
+
+// bare ESP-07 or ESP-12
+enum { TDO=14, TDI=16, TCK=12, TMS=13, TRST=4, SRST=5, LED=15 };
+
+// nodemcu devikit
+// enum { TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16 };
 
 // led logic
 #define LED_ON LOW
