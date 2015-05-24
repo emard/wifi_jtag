@@ -43,8 +43,8 @@ What works for one FPGA, doesn't neccessary work for the other.
 
 # TCP-Serial
 
-Wifi-jtag can enter tcp-serial bridge mode, thus allowing remote
-serial communication to FPGA over WiFi.
+By simply pressing ENTER in telnet session Wifi-jtag will enter tcp-serial bridge mode, 
+thus allowing remote serial communication to FPGA over WiFi.
 Serial break may be issued with K or ctrl-@ at start of telnet session.
 Serial break resets FPGArduino F32C CPU and enters bootloader,
 which can accept a hex or binary executable file.
