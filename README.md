@@ -138,7 +138,8 @@ RTS       | yellow | REST
 
 Precompiled binary is available in bin/
 
-Default SSID=ssid PASSWORD=password
+Default SSID is "jtag" (without quotes) and no password
+for connecting to free access point
 
 It has to be compiled to change SSID and PASSWORD.
 
