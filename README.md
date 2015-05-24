@@ -70,9 +70,11 @@ char of the file should be a null char (ascii 0 aka \0)
 # Pinout
 
 The pinout with standard TXD and RXD:
+
     TDO=14, TDI=16, TCK=12, TMS=13, TRST=4, SRST=5, TXD=1, RXD=3, LED=15
 
 Alternte serial pinout can be defined at compile time:
+
     TXD=15, RXD=13
 
 ![ESP-12 pinout](/pic/esp-12_pindef.png)
