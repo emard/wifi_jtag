@@ -69,12 +69,11 @@ char of the file should be a null char (ascii 0 aka \0)
 
 # Pinout
 
-The GPIO pinout:
-    TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16
+The pinout with standard TXD and RXD:
+    TDO=14, TDI=16, TCK=12, TMS=13, TRST=4, SRST=5, TXD=1, RXD=3, LED=15
 
-The serial pinout is standard RXD and TXD.
-The alternte serial pinout (if compiled with SERIAL_SWAP 1):
-    RXD=13, TXD=15
+Alternte serial pinout can be defined at compile time:
+    TXD=15, RXD=13
 
 ![ESP-12 pinout](/pic/esp-12_pindef.png)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
@@ -89,32 +88,33 @@ The alternte serial pinout (if compiled with SERIAL_SWAP 1):
   VCC   |   3V3   |   VCC      | red    |       4     |    2
   TXD0  |   D10   |TXD or GPIO1| orange |             |RXD 94
   RXD0  |   D9    |RXD or GPIO3| white  |             |TXD 97
-  TXD2  |   D8    |   GPIO15   | orange |             |RXD 94
-  RXD2  |   D7    |   GPIO13   | white  |             |TXD 97
   GND   |         |   GPIO15   | 1k     |             |
   VCC   |         | EN or CH_PD| 1k     |             |
   VCC   |         |   GPIO0    | 15k    |             |
   VCC   |         |   GPIO2    | 15k    |             |
   VCC   |         |   REST     | 15k    |             |
 
-Warning1: use either TXD0/RXD0 or TXD2/RXD2 not 0 and 2 at the same time.
-If ESP8266 doesn't boot at power up, you mignt try the
-other pin or disconnect both GPIO2 and GPIO15.
-
-Warning2: Some ESP-12 modules and breakout boards have GPIO4 and GPIO5 swapped
+Warning: Some ESP-12 modules and breakout boards have GPIO4 and GPIO5 swapped
 and wrong labeling for them. If it doesn't work, try swapping GPIO4 and GPIO5.
 See ESP8266 family pinouts:
 http://www.esp8266.com/wiki/doku.php?id=esp8266-module-family
 
 Avoid connecting GPIO 0, 2, 15, 16 to target FPGA, as those
 pins need to be at some default state at power on for ESP8266
-to boot firmware. Use ESP-12 as it has has plenty of GPIO.
-There's complete development board with micro usb:
-https://github.com/nodemcu/nodemcu-devkit
+to boot firmware. If it doesn't boot, they need to be disconnected
+during first second of powering up the ESP8266.
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
 WIFI-JTAG board can be directly powered from JTAG connector.
+
+We recommend ESP-07, ESP-12 or ESP-201 as they have plenty of free GPIO.
+They need external usbserial to flash them, see next section "Flashing".
+
+"nodemcu-devkit" board has onboard 3.3V serial over micro usb:
+https://github.com/nodemcu/nodemcu-devkit but if TXD/RXD need to be
+used to communicate with FPGA then TXD must be GPIO15 and manually 
+disconnected during power up.
 
 # Flashing
 
