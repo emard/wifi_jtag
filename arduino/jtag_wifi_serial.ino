@@ -1,5 +1,5 @@
 /*  
- *  JTAG-WIFI with TCP-SERIAL by Emard
+ *  JTAG-WIFI with TCP-SERIAL by Emard <vordah@gmail.com>
  *
  *  OpenOCD compatible remote_bitbang WIFI-JTAG server
  *  for ESP8266 Arduino
@@ -46,29 +46,34 @@
 #include <ESP8266WiFi.h>
 
 const char* ssid = "ssid";
-const char* password = "password";
+const char* password = "";
+// password = "something"; // longer than 8 characters will use WPA
+// password = "";          // zero length password connects to open network
 
 // cross reference gpio to nodemcu lua pin numbering
-// esp gpio:     0, 2, 4, 5,15,13,12,14,16
-// lua nodemcu:  3, 4, 2, 1, 8, 7, 6, 5, 0
+// esp       GPIO: 0, 2, 4, 5,15,13,12,14,16
+// lua nodemcu  D: 3, 4, 2, 1, 8, 7, 6, 5, 0
 
 // GPIO pin assignment
 // Try to avoid connecting JTAG to GPIO 0, 2, 15, 16 (board may not boot)
-enum { TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, LED=16 };
-// RXD=GPIO13 and TXD=GPIO15 used as Serial.swap() alternate serial port
-// additional TXD=GPIO2 (#define TXD_GPIO2 1)
+// only 2 serial pin sets are possible:
+// normal (if programming cable can be disconnected):  TXD=1   RXD=3  
+// alternate (programming cable always connected):     TXD=15  RXD=13
+
+// pinout suitable for bare ESP-7 or ESP-12 (JTAG pins on one side, direct to xilinx 14-pin)
+// enum { TDO=14, TDI=16, TCK=12, TMS=13, TRST=4, SRST=5, TXD=1, RXD=3, LED=15 };
+
+// pinout for nodemcu-devkit, usbserial alwyas connected, LED
+// boot problem: at power up, user has to manually disconnect TXD GPIO15
+//     TDO=D6, TDI=D5,TCK=D2,TMS=D1
+enum { TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, TXD=15, RXD=13, LED=16 };
 
 enum { MODE_JTAG=0, MODE_SERIAL=1 };
 
-uint8_t mode = MODE_JTAG; // input parser mode JTAG (remote bitbang)
+uint8_t mode = MODE_JTAG; // initial input parser mode is JTAG (remote bitbang)
 
 // *** serial port settings ***
 #define BAUDRATE 115200
-
-// use standard  serial pins TX=GPIO1  RX=GPIO3
-#define SERIAL_SWAP 0
-// use alternate serial pins TX=GPIO15 RX=GPIO13
-//#define SERIAL_SWAP 1
 
 // 0: don't use additional TX
 // 1: use additional TX at GPIO2
@@ -86,7 +91,7 @@ WiFiClient serverClients[MAX_SRV_CLIENTS];
 #define LED_OFF HIGH
 #define LED_DIM INPUT_PULLDOWN
 
-uint8_t jtag_state = 0; // 0:off 1:on
+uint8_t jtag_state = 0; // 0:jtag_off 1:jtag_on, initial is jtag_off
 
 // activate JTAG outputs
 void jtag_on(void)
@@ -135,26 +140,19 @@ void jtag_reset(uint8_t trst_srst)
   digitalWrite(TRST, trst_srst & 2 ? HIGH : LOW);
 }
 
-
 void serial_break()
 {
   pinMode(LED, LED_DIM);
   digitalWrite(LED, LED_ON);
-  #if SERIAL_SWAP
-  Serial.swap();
-  #endif
+  if(TXD == 15)
+    Serial.swap();
   Serial.end(); // shutdown serial port
   #if TXD_GPIO2
   // if we want to drive additional tx line
   Serial1.end(); // shutdown it too
   #endif
-  #if SERIAL_SWAP
-  pinMode(15, OUTPUT);
-  digitalWrite(15, LOW); // line LOW is serial break
-  #else
-  pinMode(1, OUTPUT);
-  digitalWrite(1, LOW); // line LOW is serial break  
-  #endif
+  pinMode(TXD, OUTPUT);
+  digitalWrite(TXD, LOW); // TXD line LOW for 200ms is serial break
   #if TXD_GPIO2
   pinMode(2, OUTPUT);
   digitalWrite(2, LOW);
@@ -162,9 +160,8 @@ void serial_break()
   delay(210); // at least 200ms we must wait for BREAK to take effect
   Serial.begin(BAUDRATE); // start port just before use
   // remove serial break either above or after swap
-  #if SERIAL_SWAP
-  Serial.swap();
-  #endif
+  if(TXD == 15)
+    Serial.swap();
   #if TXD_GPIO2
   Serial1.begin(BAUDRATE); // port started, break removed at GPIO2 (will now become serial TX)
   #endif
@@ -237,7 +234,10 @@ void setup() {
   jtag_off();
   pinMode(LED, OUTPUT);
   Serial1.begin(BAUDRATE);
-  WiFi.begin(ssid, password);
+  if(password[0] != '\0')
+    WiFi.begin(ssid, password);
+  else
+    WiFi.begin(ssid);
   Serial1.print("\nConnecting to "); Serial1.println(ssid);
   while (WiFi.status() != WL_CONNECTED)
   { // blink LED when trying to connect
@@ -248,15 +248,15 @@ void setup() {
   }
   //start UART and the server
   Serial.begin(BAUDRATE);
-  #if SERIAL_SWAP
-  Serial.swap();
-  #endif
+  if(TXD == 15)
+    Serial.swap();
   server.begin();
   server.setNoDelay(true);
   
-  Serial1.print("Ready! Use 'telnet ");
+  Serial1.println("Ready! To connect, use:");
+  Serial1.print("telnet ");
   Serial1.print(WiFi.localIP());
-  Serial1.println(" 3335' to connect");
+  Serial1.println(" 3335");
 }
 
 void loop() {
