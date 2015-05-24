@@ -101,8 +101,8 @@ and wrong labeling for them. If it doesn't work, try swapping GPIO4 and GPIO5.
 See ESP8266 family pinouts:
 http://www.esp8266.com/wiki/doku.php?id=esp8266-module-family
 
-Avoid connecting GPIO 0, 2, 15, 16 to target FPGA, as those
-pins need to be at some default state at power on for ESP8266
+Avoid connecting GPIO 0, 2, 15 (and 16 on some ESP) to target FPGA, 
+as those pins need to be at some default state at power on for ESP8266
 to boot firmware. If it doesn't boot, they need to be disconnected
 during first second of powering up the ESP8266.
 
