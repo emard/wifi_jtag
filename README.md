@@ -82,10 +82,10 @@ The alternte serial pinout (if compiled with SERIAL_SWAP 1):
   PIN   | nodemcu |   ESP-12   | wire   |TB276 10-pin |TB299 14-pin
 --------|---------|------------|--------|-------------|----------------
   GND   |   GND   |   GND      | black  |      10     | 1,3,5,7,9,11,13
-  TMS   |   D1    |   GPIO5    | violet |       5     |    4
-  TDI   |   D5    |   GPIO14   | blue   |       9     |   10
-  TDO   |   D6    |   GPIO12   | green  |       3     |    8
-  TCK   |   D2    |   GPIO4    | yellow |       1     |    6
+  TMS   |   D7    |   GPIO13   | violet |       5     |    4
+  TDI   |   D0    |   GPIO16   | blue   |       9     |   10
+  TDO   |   D5    |   GPIO14   | green  |       3     |    8
+  TCK   |   D6    |   GPIO12   | yellow |       1     |    6
   VCC   |   3V3   |   VCC      | red    |       4     |    2
   TXD0  |   D10   |TXD or GPIO1| orange |             |RXD 94
   RXD0  |   D9    |RXD or GPIO3| white  |             |TXD 97

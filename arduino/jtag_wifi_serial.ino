@@ -45,9 +45,9 @@
 
 #include <ESP8266WiFi.h>
 
-const char* ssid = "ssid";
+const char* ssid = "jtag";
 const char* password = "";
-// password = "something"; // longer than 8 characters will use WPA
+// password = "something"; // 8 characters or longer will use WPA2-PSK
 // password = "";          // zero length password connects to open network
 
 // cross reference gpio to nodemcu lua pin numbering
@@ -61,12 +61,12 @@ const char* password = "";
 // alternate (programming cable always connected):     TXD=15  RXD=13
 
 // pinout suitable for bare ESP-7 or ESP-12 (JTAG pins on one side, direct to xilinx 14-pin)
-// enum { TDO=14, TDI=16, TCK=12, TMS=13, TRST=4, SRST=5, TXD=1, RXD=3, LED=15 };
+enum { TDO=14, TDI=16, TCK=12, TMS=13, TRST=4, SRST=5, TXD=1, RXD=3, LED=15 };
 
 // pinout for nodemcu-devkit, usbserial alwyas connected, LED
-// boot problem: at power up, user has to manually disconnect TXD GPIO15
-//     TDO=D6, TDI=D5,TCK=D2,TMS=D1
-enum { TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, TXD=15, RXD=13, LED=16 };
+// boot problem: at power up, user has to manually disconnect TXD GPIO15, TRST GPIO0, SRST GPIO2
+//     TDO=D6, TDI=D5,TCK=D2,TMS=D1,TRST=D3,SRST=D4  TXD=D8, RXD=D7
+// enum { TDO=12, TDI=14, TCK=4, TMS=5, TRST=0, SRST=2, TXD=15, RXD=13, LED=16 };
 
 enum { MODE_JTAG=0, MODE_SERIAL=1 };
 
