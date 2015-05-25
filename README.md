@@ -1,13 +1,13 @@
 # WIFI-JTAG
 
-ESP8266 (ESP-12) for $4 as WIFI JTAG adapter.
+ESP8266 (ESP-12) for $4 as WiFi JTAG adapter.
 This could be the simplest, the cheapest and the slowest JTAG adapter.
 
 Here's arduino code for ESP8266 which listens to TCP port 3335 
 and talks remote_bitbang protocol with OpenOCD http://openocd.org over WiFi 
-and usb-serial port version of the same, for use with any arduino (without WIFI).
+and usb-serial port version of the same, for use with any arduino (without WiFi).
 
-It can upload SVF bistream over WIFI network to the FPGA. 
+It can upload SVF bistream over WiFi network to the FPGA. 
 more on http://www.nxlab.fer.hr/fpgarduino/linux_bitstreams.html
 
 Tested and working on FPGA boards TB276 (Altera Cyclone-4) and TB299 (Xilinx Spartan-6)
@@ -108,7 +108,7 @@ they need to be disconnected during first second of powering up the ESP8266.
 
 TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
-WIFI-JTAG board can be directly powered from JTAG connector.
+WiFi-JTAG board can be directly powered from JTAG connector.
 
 We recommend ESP-07, ESP-12 or ESP-201 as they have plenty of free GPIO.
 They need external usbserial to flash them, see next section "Flashing".
@@ -177,7 +177,7 @@ Select pull down menu Tools->Board->Board Manager and instal ESP8266 (cca 30MB).
 
 JTAG upload is slow because OpenOCD creates network 
 traffic with short packets of 1-3 bytes sending to and 
-from WIFI-JTAG. Watch the traffic:
+from WiFi-JTAG. Watch the traffic:
 
     tcpdump -A port 3335
 
@@ -200,7 +200,7 @@ After one JTAG TCP connection, it is good
 to wait few seconds for the sockets to close
 properly before next connection.
 It may sometimes stop responding when just connected 
-to WIFI access point even if JTAG is not used.
+to WiFi access point even if JTAG is not used.
 We recommend to power it on just before use.
 
 # Improvement
@@ -220,4 +220,9 @@ It is here just as a proof-of-concept.
 
 # Similar JTAG projects:
 
+JTAG SVF player
 https://github.com/sowbug/JTAGWhisperer
+
+Xilinx virtual cable
+https://github.com/Xilinx/XilinxVirtualCable
+https://github.com/tmbinc/xvcd
