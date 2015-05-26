@@ -62,6 +62,7 @@ const char* password = "";
 
 // pinout suitable for bare ESP-7 or ESP-12 (JTAG pins on one side, direct to xilinx 14-pin)
 enum { TDO=14, TDI=16, TCK=12, TMS=13, TRST=4, SRST=5, TXD=1, RXD=3, LED=15 };
+// possible use of SPI for acceleration, fixed pins: TDO=12, TDI=13, TCK=14
 
 // pinout for nodemcu-devkit, usbserial alwyas connected, LED
 // boot problem: at power up, user has to manually disconnect TXD GPIO15, TRST GPIO0, SRST GPIO2
