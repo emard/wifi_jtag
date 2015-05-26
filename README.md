@@ -226,3 +226,9 @@ https://github.com/sowbug/JTAGWhisperer
 Xilinx virtual cable
 https://github.com/Xilinx/XilinxVirtualCable
 https://github.com/tmbinc/xvcd
+
+FT232R bitbang
+http://vak.ru/doku.php/proj/bitbang/bitbang-jtag
+
+JTAGduino
+https://github.com/balau/JTAGduino
