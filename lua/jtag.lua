@@ -6,15 +6,15 @@
 -- stops working
 --
 port=3335
--- esp gpio:  0, 2,15,13,12,14,16
--- lua new :  3, 4, 8, 7, 6, 5, 0
+-- esp       GPIO: 0, 2, 4, 5,15,13,12,14,16
+-- lua nodemcu  D: 3, 4, 2, 1, 8, 7, 6, 5, 0
 -- pin assignment
-tdo  = 4
-tdi  = 5
+tdo  = 5
+tdi  = 0
 tck  = 6
 tms  = 7
-trst = 1
-srst = 2
+trst = 3
+srst = 4
 
 jtag_off = function(conn)
   print("jtag off")
@@ -66,7 +66,6 @@ jtag_parse = function(conn, payload)
    for i = 1, #payload do
      local c = payload:sub(i,i)
      -- print(c)
-     tmr.wdclr()
      if c >= "0" and c <= "7" then
        jtag_write(bit.band(string.byte(c),7))
      end
@@ -85,10 +84,14 @@ jtag_parse = function(conn, payload)
      if c == "Q" then
        conn:close()
      end
+     tmr.wdclr()
    end
 end
 
 jtag_off()
+
+-- wifi.setmode(wifi.STATION)
+-- wifi.sta.config("ssid","password")
 
 ipaddress=wifi.sta.getip()
 if not ipaddress then
