@@ -215,7 +215,7 @@ or SVF player approach from JTAGWhisperer.
 
 LUA version of the above does the same protocol but in 
 practice it will not work for longer transfers, only
-boundary scan. Works unstable and often reboots. 
+boundary scan. TCP disconnects within in minute.
 It is here just as a proof-of-concept.
 
 # Similar JTAG projects:
