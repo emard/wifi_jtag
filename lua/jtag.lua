@@ -66,6 +66,7 @@ jtag_parse = function(conn, payload)
    for i = 1, #payload do
      local c = payload:sub(i,i)
      -- print(c)
+     tmr.wdclr()
      if c >= "0" and c <= "7" then
        jtag_write(bit.band(string.byte(c),7))
      end
