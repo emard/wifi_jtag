@@ -5,7 +5,10 @@
 -- when JTAG transfers longer file, nodemcu reboots or
 -- stops working
 --
+-- TCP port server will listen to
 port=3335
+-- timeout in seconds for inactive client to disconnect
+timeout=1000
 -- esp       GPIO: 0, 2, 4, 5,15,13,12,14,16
 -- lua nodemcu  D: 3, 4, 2, 1, 8, 7, 6, 5, 0
 -- pin assignment
@@ -101,7 +104,7 @@ print("OpenOCD remote_bitbang "..ipaddress..":"..port)
 print("TDO:",tdo,"TDI:",tdi,"TCK:",tck,"TMS:",tms,"TRST:",trst,"SRST:",srst)
 
 -- A simple TCP server
-srv=net.createServer(net.TCP)
+srv=net.createServer(net.TCP, timeout)
 srv:listen(port,function(conn)
   jtag_on()
   conn:on("receive", jtag_parse)
