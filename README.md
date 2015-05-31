@@ -222,6 +222,7 @@ It is here just as a proof-of-concept.
 
 Xilinx virtual cable in ESP nodemcu LUA
 https://github.com/wzab/esp-wifi-xvc
+http://forums.xilinx.com/t5/Configuration/Problems-with-XVC-plugin-both-in-ISE-Impact-and-in-Vivado/m-p/631321
 
 JTAG SVF player
 https://github.com/sowbug/JTAGWhisperer
