@@ -220,6 +220,9 @@ It is here just as a proof-of-concept.
 
 # Similar JTAG projects:
 
+Xilinx virtual cable in ESP nodemcu LUA
+https://github.com/wzab/esp-wifi-xvc
+
 JTAG SVF player
 https://github.com/sowbug/JTAGWhisperer
 
