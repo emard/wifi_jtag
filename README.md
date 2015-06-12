@@ -173,6 +173,9 @@ in File->Default Settings->Additional Boards Manager URLs enter:
 
 Select pull down menu Tools->Board->Board Manager and instal ESP8266 (cca 30MB). 
 
+If you have ESP-12 or nodemcu, choose board "Generic ESP8266 Module".
+
+
 
 # Speed
 
