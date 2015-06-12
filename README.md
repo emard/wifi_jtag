@@ -110,14 +110,16 @@ TRST and SRST are reset signals usually used for ARM debugging.
 Most FPGA don't need them. LED may be left unconnected too.
 WiFi-JTAG board can be directly powered from JTAG connector.
 
-We recommend ESP-07 or ESP-12 as they have plenty of free GPIO.
+We recommend ESP-12 or nodemcu as they have plenty of free GPIO.
 They need external usbserial to flash them, see next section "Flashing".
-ESP-201 has some problems (boundary scan works but TCP stalls?).
 
 "nodemcu-devkit" board has onboard 3.3V serial over micro usb:
 https://github.com/nodemcu/nodemcu-devkit but if TXD/RXD need to be
 used to communicate with FPGA then TXD must be GPIO15 and manually 
 disconnected during power up.
+
+ESP-201 is currently not recommended. Those boards are different.
+Boundary scan works but TCP becomes slow and stalls after some time.
 
 # Flashing
 
