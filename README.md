@@ -80,21 +80,21 @@ Alternte serial pinout can be defined at compile time:
 ![ESP-12 pinout](/pic/esp-12_pindef.png)
 ![Altera 10-pin and Xilinx 14-pin](/pic/altera10pin_xilinx14pin.jpg)
 
-  PIN   | nodemcu |   ESP-12   | wire    |TB276 10-pin |TB299 14-pin
---------|---------|------------|---------|-------------|----------------
-  GND   |   GND   |   GND      | black   |      10     | 1,3,5,7,9,11,13
-  TMS   |   D7    |   GPIO13   | violet  |       5     |    4
-  TDI   |   D0    |   GPIO16   | blue    |       9     |   10
-  TDO   |   D5    |   GPIO14   | green   |       3     |    8
-  TCK   |   D6    |   GPIO12   | yellow  |       1     |    6
-  VCC   |   3V3   |   VCC      | red     |       4     |    2
-  TXD0  |   D10   |TXD or GPIO1| orange  |             |RXD 94
-  RXD0  |   D9    |RXD or GPIO3| white   |             |TXD 97
-  GND   |         |   GPIO15   | 1k      |             |
-  VCC   |         | EN or CH_PD| 1k      |             |
-  VCC   |         |   GPIO0    |15k or NC|             |
-  VCC   |         |   GPIO2    |15k or NC|             |
-  VCC   |         |   REST     |15k or NC|             |
+  PIN   | nodemcu |   ESP-12   | ESP-201   | wire    |TB276 10-pin |TB299 14-pin
+--------|---------|------------|-----------|---------|-------------|----------------
+  GND   |   GND   |   GND      | GND       | black   |      10     | 1,3,5,7,9,11,13
+  TMS   |   D7    |   GPIO13   | 1013      | violet  |       5     |    4
+  TDI   |   D0    |   GPIO16   | XPD       | blue    |       9     |   10
+  TDO   |   D5    |   GPIO14   | 1014      | green   |       3     |    8
+  TCK   |   D6    |   GPIO12   | 1012      | yellow  |       1     |    6
+  VCC   |   3V3   |   VCC      | 3.3V      | red     |       4     |    2
+  TXD0  |   D10   |TXD or GPIO1| TX        | orange  |             |RXD 94
+  RXD0  |   D9    |RXD or GPIO3| RX        | white   |             |TXD 97
+  GND   |         |   GPIO15   | 1015      | 1k      |             |
+  VCC   |         | EN or CH_PD| CHIP_EX   | 1k      |             |
+  VCC   |         |   GPIO0    | 100       |15k or NC|             |
+  VCC   |         |   GPIO2    | 102       |15k or NC|             |
+  VCC   |         |   REST     | RST       |15k or NC|             |
 
 Warning: Some ESP-12 modules and breakout boards have GPIO4 and GPIO5 swapped
 and wrong labeling for them. If it doesn't work, try swapping GPIO4 and GPIO5.
@@ -122,16 +122,16 @@ disconnected during power up.
 
 To flash firmware into ESP8266 connect 3.3V USBSERIAL adapter:
 
-USBSERIAL | wire   |ESP-12
-----------|--------|-----------
-GND       | black  | GND
-GND       | 1k     | GPIO15
-VCC       | red    | VCC 3.3V
-VCC       | 1k     | EN or CH_PD
-RXD       | orange | TXD
-TXD       | white  | RXD
-DTR       | green  | GPIO0
-RTS       | yellow | REST
+USBSERIAL | wire   | ESP-12      | ESP-201
+----------|--------|-------------|---------
+ GND      | black  | GND         | GND
+ GND      | 1k     | GPIO15      | 1015
+ VCC      | red    | VCC 3.3V    | 3.3V
+ VCC      | 1k     | EN or CH_PD | CHIP_EX
+ RXD      | orange | TXD         | TX
+ TXD      | white  | RXD         | RX
+ DTR      | green  | GPIO0       | 100
+ RTS      | yellow | REST        | RST
 
 
 # Compiling
