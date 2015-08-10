@@ -90,7 +90,7 @@ WiFiClient serverClients[MAX_SRV_CLIENTS];
 // led logic
 #define LED_ON LOW
 #define LED_OFF HIGH
-#define LED_DIM INPUT_PULLDOWN
+#define LED_DIM INPUT_PULLUP
 
 uint8_t jtag_state = 0; // 0:jtag_off 1:jtag_on, initial is jtag_off
 
