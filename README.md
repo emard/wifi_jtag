@@ -118,8 +118,10 @@ https://github.com/nodemcu/nodemcu-devkit but if TXD/RXD need to be
 used to communicate with FPGA then TXD must be GPIO15 and manually 
 disconnected during power up.
 
-ESP-201 is currently not recommended. Those boards are different.
+ESP-201 is currently not recommended for use ESP8266 Arduino 0.9.
 Boundary scan works but TCP becomes slow and stalls after some time.
+ESP8266 Arduino 1.0 should addressed some ESP-12E hardware changes
+but I haven't yet fully tested this.
 
 # Flashing
 
