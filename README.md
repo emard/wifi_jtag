@@ -118,9 +118,8 @@ https://github.com/nodemcu/nodemcu-devkit but if TXD/RXD need to be
 used to communicate with FPGA then TXD must be GPIO15 and manually 
 disconnected during power up.
 
-ESP-201 works using ESP8266 Arduino, select it as 
-board NodeMCU 1.0 (ESP-12E), uploads f32c bitstream in 
-half a minute.
+ESP-201 works too. uploads f32c bitstream in half a minute.
+
 
 # Flashing
 
@@ -151,32 +150,27 @@ To compile from source you need ESP8266 Arduino.
 Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
 Then add support for ESP8266
 
-This is the main project that started it all
+Here is the github project
 https://github.com/esp8266/Arduino
-Automatic installation using JSON is now avaialble
+use ESP8266 Arduino (stable, Jul 23, 2015), 
+
+Automatic installation using JSON is avaialble
 in File->Default Settings->Additional Boards Manager URLs enter:
 
-    http://arduino.esp8266.com/package_esp8266com_index.json
+    http://arduino.esp8266.com/stable/package_esp8266com_index.json
 
 Select pull down menu Tools->Board->Board Manager
 and instal ESP8266 (cca 30MB).
 Read more on
 https://github.com/arduino/Arduino/wiki/Unofficial-list-of-3rd-party-boards-support-urls#list-of-3rd-party-boards-support-urls
 
-https://github.com/sandeepmistry/esp8266-Arduino
-version 0.0.5 is simple to manually install 
-(just copy to ~/Arduino/hardware) 
-and has pretty stable and fast TCP stack.
-
-Adafruit has some ESP8266 has JSON install but 
-speed and stability of TCP is not the best (old library?).
-in File->Default Settings->Additional Boards Manager URLs enter:
-
-    https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
-
 Select pull down menu Tools->Board->Board Manager and instal ESP8266 (cca 30MB). 
 
-If you have ESP-12 or nodemcu, choose board "Generic ESP8266 Module".
+If you have ESP-12 or old nodemcu, 
+choose board "Generic ESP8266 Module" or "NodeMCU 0.9 (ESP-12)".
+
+If you have ESP-12E, ESP-201 or new nodemcu, 
+choose board "NodeMCU 1.0 (ESP-12E)" 
 
 
 
