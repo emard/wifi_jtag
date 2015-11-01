@@ -118,9 +118,9 @@ https://github.com/nodemcu/nodemcu-devkit but if TXD/RXD need to be
 used to communicate with FPGA then TXD must be GPIO15 and manually 
 disconnected during power up.
 
-ESP-201 is supported now, using ESP8266 Arduino select board
-NodeMCU 1.0 (ESP-12E), tested uploading bitstream to altera in 
-26 seconds.
+ESP-201 works using ESP8266 Arduino, select it as 
+board NodeMCU 1.0 (ESP-12E), uploads f32c bitstream in 
+half a minute.
 
 # Flashing
 
@@ -194,11 +194,11 @@ Switching direction from receive to transmit takes time
 Time uploading FPGArduino https://github.com/f32c 
 
     750KB SVF file to TB276 (Altera Cyclone-4)
-    WiFi esp8266/arduino     : 0:26 minutes
+    WiFi esp8266/arduino     : 0:27 minutes
     Serial 230400 baud       : 4:20 minutes
 
     1.4MB SVF file to TB299 (Xilinx Spartan-6)
-    WiFi esp8266/arduino     : 1:30 minutes
+    WiFi esp8266/arduino     : 0:24 minutes
 
 # Reliability
 
