@@ -141,13 +141,14 @@ USBSERIAL | wire   | ESP-12      | ESP-201
 
 Precompiled binary is available in bin/
 
-Default SSID is "jtag" (without quotes) and no password
-for connecting to free access point
+Default SSID is "jtag" and password "12345678"
+(without quotes), adapter will act as access point.
 
-It has to be compiled to change SSID and PASSWORD.
+It has to be compiled to change SSID and PASSWORD
+and to select access point or client mode.
 
 To compile from source you need ESP8266 Arduino.
-Download from http://arduino.cc and unpack arduino-1.6.4 or higher.
+Download from http://arduino.cc and unpack arduino-1.6.5 or higher.
 Then add support for ESP8266
 
 Here is the github project
