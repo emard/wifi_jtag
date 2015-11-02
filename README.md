@@ -88,8 +88,8 @@ Alternate serial pinout can be defined at compile time:
   TDO   |   D6    |   GPIO12   | 1012      | green   |       3     |    8
   TDI   |   D7    |   GPIO13   | 1013      | blue    |       9     |   10
   VCC   |   3V3   |   VCC      | 3.3V      | red     |       4     |    2
-  TXD0  |   D10   |TXD or GPIO1| TX        | orange  |             |RXD 94
-  RXD0  |   D9    |RXD or GPIO3| RX        | white   |             |TXD 97
+  TXD0  |   D10   |TXD or GPIO1| TX        | orange  | RXD 133     |RXD 94
+  RXD0  |   D9    |RXD or GPIO3| RX        | white   | TXD 129     |TXD 97
   GND   |         |GPIO15 or NC| 1015      | 15k     |             |
   VCC   |         | EN or CH_PD| CHIP_EX   | 15k     |             |
   VCC   |         | GPIO0 or NC| 100       | 15k     |             |
