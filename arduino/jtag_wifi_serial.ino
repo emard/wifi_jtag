@@ -46,7 +46,8 @@
 #include <ESP8266WiFi.h>
 
 const char* ssid = "jtag";
-const char* password = "";
+const char* password = "12345678";
+//#include "pass.h"
 // password = "something"; // 8 characters or longer will use WPA2-PSK
 // password = "";          // zero length password connects to open network
 
@@ -70,8 +71,10 @@ enum { TDO=12, TDI=13, TCK=14, TMS=16, TRST=4, SRST=5, TXD=1, RXD=3, LED=15 };
 // enum { TDO=12, TDI=5, TCK=14, TMS=16, TRST=0, SRST=2, TXD=15, RXD=13, LED=1 };
 
 enum { MODE_JTAG=0, MODE_SERIAL=1 };
-
 uint8_t mode = MODE_JTAG; // initial input parser mode is JTAG (remote bitbang)
+
+enum { CLIENT=0, SERVER=1 }; // SERVER: jtag is Access Point
+uint8_t wifi_mode = SERVER;
 
 // *** serial port settings ***
 #define BAUDRATE 115200
@@ -235,17 +238,28 @@ void setup() {
   jtag_off();
   pinMode(LED, OUTPUT);
   Serial1.begin(BAUDRATE);
-  if(password[0] != '\0')
-    WiFi.begin(ssid, password);
-  else
-    WiFi.begin(ssid);
-  Serial1.print("\nConnecting to "); Serial1.println(ssid);
-  while (WiFi.status() != WL_CONNECTED)
-  { // blink LED when trying to connect
-    digitalWrite(LED, LED_ON);
-    delay(10);
-    digitalWrite(LED, LED_OFF);
-    delay(500);
+  if(wifi_mode == CLIENT)
+  {
+    if(password[0] != '\0')
+      WiFi.begin(ssid, password);
+    else
+      WiFi.begin(ssid);
+    Serial1.print("\nConnecting to "); Serial1.println(ssid);
+    while (WiFi.status() != WL_CONNECTED)
+    { // blink LED when trying to connect
+      digitalWrite(LED, LED_ON);
+      delay(10);
+      digitalWrite(LED, LED_OFF);
+      delay(500);
+    }
+  }
+  if(wifi_mode == SERVER)
+  {
+    if(password[0] != '\0')
+      WiFi.softAP(ssid, password);
+    else
+      WiFi.softAP(ssid);
+    Serial1.print("\nServing Access Point name "); Serial1.println(ssid);
   }
   //start UART and the server
   Serial.begin(BAUDRATE);
