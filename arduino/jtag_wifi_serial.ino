@@ -17,10 +17,10 @@
  *  mi32l>
  *
  *  virtual serial port:
- *  socat -d -d pty,link=/dev/ttyS5,raw,echo=0  tcp:xilinx.lan:3335
+ *  socat -d -d pty,link=/dev/ttyS5,raw,echo=0  tcp:jtag.lan:3335
  *
  *  send file to tcp
- *  socat -u FILE:blink.cpp.hex TCP:xilinx.lan:3335
+ *  socat -u FILE:blink.cpp.hex TCP:jtag.lan:3335
 */
 
 /* 
