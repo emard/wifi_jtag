@@ -40,6 +40,7 @@ Arduino ESP8266.
     Info : remote_bitbang interface quit
 
 What works for one FPGA, doesn't neccessary work for the other.
+For example, it didn't work for Lattice ECP3 LFE3-150EA.
 
 # TCP-Serial
 
