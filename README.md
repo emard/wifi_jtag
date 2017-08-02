@@ -9,6 +9,10 @@ Here's arduino code for ESP8266 which listens to TCP port 3335
 and talks remote_bitbang protocol with OpenOCD http://openocd.org over WiFi 
 and usb-serial port version of the same, for use with any arduino (without WiFi).
 
+Some time has passed and dependencies changed too, 
+both at ESP8266 TCP stack and openocd and this project might
+not work out of the box (as it did before :).
+
 It can upload SVF bistream over WiFi network to the FPGA. 
 more on http://www.nxlab.fer.hr/fpgarduino/linux_bitstreams.html
 
