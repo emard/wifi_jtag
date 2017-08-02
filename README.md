@@ -5,13 +5,14 @@ This could be the simplest, the cheapest and the slowest JTAG adapter.
 This WIFI-JTAG needs openocd to work, but I also offer a standalone
 [ESP8266 LibXSVF JTAG](https://github.com/emard/LibXSVF).
 
+Note: Some time has passed so dependencies changed 
+both at ESP8266 TCP stack and openocd, so this project might
+not work out of the box (as it did before :-).
+
 Here's arduino code for ESP8266 which listens to TCP port 3335 
 and talks remote_bitbang protocol with OpenOCD http://openocd.org over WiFi 
 and usb-serial port version of the same, for use with any arduino (without WiFi).
 
-Some time has passed and dependencies changed too, 
-both at ESP8266 TCP stack and openocd and this project might
-not work out of the box (as it did before :).
 
 It can upload SVF bistream over WiFi network to the FPGA. 
 more on http://www.nxlab.fer.hr/fpgarduino/linux_bitstreams.html
