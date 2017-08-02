@@ -2,6 +2,8 @@
 
 ESP8266 (ESP-12) for $4 as WiFi JTAG adapter.
 This could be the simplest, the cheapest and the slowest JTAG adapter.
+This WIFI-JTAG needs openocd to work, but I also offer a standalone
+[ESP8266 LibXSVF JTAG](https://github.com/emard/LibXSVF).
 
 Here's arduino code for ESP8266 which listens to TCP port 3335 
 and talks remote_bitbang protocol with OpenOCD http://openocd.org over WiFi 
