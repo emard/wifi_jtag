@@ -3,7 +3,7 @@
 ESP8266 (ESP-12) for $4 as WiFi JTAG adapter.
 This could be the simplest, the cheapest and the slowest JTAG adapter.
 This WIFI-JTAG needs openocd to work, but I also offer a standalone
-[ESP8266 LibXSVF JTAG](https://github.com/emard/LibXSVF).
+[LibXSVF-ESP8266 JTAG](https://github.com/emard/LibXSVF-ESP8266).
 
 Note: Some time has passed so dependencies changed 
 both at ESP8266 TCP stack and openocd, so this project might
