@@ -238,6 +238,7 @@ JTAG SVF player
 https://github.com/sowbug/JTAGWhisperer
 
 Xilinx virtual cable
+https://github.com/gtortone/esp-xvcd
 https://github.com/Xilinx/XilinxVirtualCable
 https://github.com/tmbinc/xvcd
 
